@@ -2,26 +2,348 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sonoma Raceway 3D</title>
-<script type="module" src="https://unpkg.com/@google/model-viewer@3.4.0/dist/model-viewer.min.js"></script>
+<meta name="description" content="Interactive 3D model of Sonoma Raceway built from OpenStreetMap layout and real elevation data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap">
 <style>
-  :root { --bg: #f2efe8; --fg: #1d1d1b; --muted: #6b675e; }
-  @media (prefers-color-scheme: dark) { :root { --bg: #151514; --fg: #ecebe6; --muted: #9a968c; } }
-  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); font: 15px/1.4 system-ui, sans-serif; }
-  model-viewer { width: 100%; height: 100%; --poster-color: transparent; }
-  header { position: fixed; top: 16px; left: 16px; right: 16px; pointer-events: none; }
-  h1 { margin: 0; font-size: 20px; font-weight: 600; }
-  p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+  /* Layout: full-bleed 3D stage; a timing-sheet card floats top-left, corner shortcuts run along the bottom. */
+  :root {
+    --bg: #e4e9e3;          /* valley haze */
+    --panel: rgba(248, 250, 246, 0.88);
+    --fg: #1b221e;          /* charcoal with an oak-green bias */
+    --muted: #56625a;
+    --line: #c5cec6;
+    --kerb: #c03a2b;        /* kerb red, the one accent */
+    --kerb-white: #f6f4ef;
+    --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+    --body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1312; --panel: rgba(19, 24, 22, 0.84); --fg: #e4e8e2; --muted: #97a39b;
+      --line: #2b3430; --kerb: #e2584a; --kerb-white: #e9e6df; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1312; --panel: rgba(19, 24, 22, 0.84); --fg: #e4e8e2; --muted: #97a39b;
+    --line: #2b3430; --kerb: #e2584a; --kerb-white: #e9e6df; color-scheme: dark;
+  }
+
+  html, body { height: 100%; margin: 0; }
+  [hidden] { display: none !important; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font: 400 14px/1.45 var(--body);
+    overflow: hidden;
+  }
+  .stage { position: relative; height: 100%; }
+  #scene {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    display: block; touch-action: none; outline: none;
+  }
+  #scene:focus-visible { box-shadow: inset 0 0 0 2px var(--kerb); }
+
+  .progress {
+    position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 3;
+    background: repeating-linear-gradient(90deg, var(--kerb) 0 12px, var(--kerb-white) 12px 24px);
+    transform-origin: 0 50%; transform: scaleX(0);
+    transition: transform 200ms linear, opacity 400ms ease;
+  }
+  .progress[data-done] { opacity: 0; }
+
+  .sheet {
+    position: absolute; z-index: 2;
+    top: 16px;
+    left: max(16px, env(safe-area-inset-left, 0px));
+    width: min(320px, calc(100% - 32px));
+    display: grid; gap: 12px;
+    padding: 16px 18px 14px;
+    background: var(--panel);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+  .eyebrow {
+    margin: 0;
+    font: 500 11px/1.2 var(--mono);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  h1 {
+    margin: 0;
+    font: 700 40px/0.95 var(--display);
+    letter-spacing: 0.01em; text-transform: uppercase;
+    text-wrap: balance;
+  }
+  .specs { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 0; }
+  .specs dt { color: var(--muted); font-size: 12px; }
+  .specs dd { margin: 0; font: 500 12.5px/1.45 var(--mono); font-variant-numeric: tabular-nums; }
+  .note { margin: 0; font-size: 12px; color: var(--muted); }
+  .status { margin: 0; font-size: 12.5px; color: var(--fg); font-variant-numeric: tabular-nums; }
+  .status[data-error] { color: var(--kerb); }
+
+  .views {
+    position: absolute; z-index: 2; left: 0; right: 0;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: flex; gap: 8px;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .views::-webkit-scrollbar { display: none; }
+  .views button {
+    flex: 0 0 auto;
+    display: inline-flex; align-items: baseline; gap: 8px;
+    padding: 9px 12px 10px;
+    font: 500 13px/1 var(--body); color: var(--fg);
+    background: var(--panel);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border: 1px solid var(--line); border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+  }
+  .views button:disabled { cursor: default; opacity: 0.55; }
+  .views button .n { font: 500 11px/1 var(--mono); color: var(--muted); }
+  .views button:hover:not(:disabled) { border-color: var(--muted); }
+  .views button:focus-visible { outline: 2px solid var(--kerb); outline-offset: 2px; }
+  .views button[aria-pressed="true"]::after {
+    /* a strip of kerb under the active view */
+    content: ""; position: absolute; left: -1px; right: -1px; bottom: -1px; height: 4px;
+    border-radius: 0 0 4px 4px;
+    background: repeating-linear-gradient(90deg, var(--kerb) 0 8px, var(--kerb-white) 8px 16px);
+  }
+  .views button[aria-pressed="true"] .n { color: var(--kerb); }
+
+  .credit {
+    position: absolute; z-index: 2;
+    right: max(16px, env(safe-area-inset-right, 0px));
+    top: 16px;
+    margin: 0; max-width: 260px; text-align: right;
+    font: 400 11px/1.4 var(--mono); color: var(--muted);
+  }
+
+  @media (max-width: 640px) {
+    .credit { display: none; }
+    .sheet { gap: 8px; padding: 12px 14px; }
+    h1 { font-size: 30px; }
+    .sheet .note { display: none; }
+  }
+  @media (max-width: 420px) {
+    .specs { display: none; }
+  }
 </style>
 </head>
 <body>
-<header>
-  <h1>Sonoma Raceway</h1>
-  <p>Generated with Mint Modeler from OpenStreetMap layout and real elevation data. Drag to orbit, scroll to zoom.</p>
-</header>
-<model-viewer src="sonoma-raceway.glb" alt="3D model of Sonoma Raceway" camera-controls touch-action="pan-y"
-  environment-image="neutral" shadow-intensity="1" exposure="1.05" tone-mapping="aces"
-  camera-orbit="35deg 55deg auto" min-camera-orbit="auto auto 15m" max-camera-orbit="auto 88deg auto" auto-rotate auto-rotate-delay="4000" rotation-per-second="6deg"></model-viewer>
+<main class="stage">
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <canvas id="scene" tabindex="0" aria-label="3D model of Sonoma Raceway with its terrain, grandstands and paddock. Drag to orbit."></canvas>
+
+  <section class="sheet" aria-labelledby="title">
+    <p class="eyebrow">Sonoma, California · 38.16° N 122.45° W</p>
+    <h1 id="title">Sonoma Raceway</h1>
+    <dl class="specs">
+      <dt>Road course</dt><dd>4.06 km · 2.52 mi</dd>
+      <dt>Turns</dt><dd>12</dd>
+      <dt>Elevation</dt><dd>≈ 50 m (165 ft) of climb</dd>
+      <dt>Model</dt><dd>1:1 scale · 1.52 × 1.87 km</dd>
+    </dl>
+    <p class="status" id="status" role="status">Loading the model…</p>
+    <p class="note">Drag to orbit, scroll or pinch to zoom, right-drag or two-finger drag to pan. Pick a corner below to fly there.</p>
+  </section>
+
+  <p class="credit">Layout © OpenStreetMap contributors · Terrain: Copernicus DEM · Built with Mint Modeler</p>
+
+  <nav class="views" aria-label="Camera views" id="views">
+    <button type="button" data-view="overview" aria-pressed="true">Overview</button>
+    <button type="button" data-view="start" disabled><span class="n">S/F</span>Start / finish</button>
+    <button type="button" data-view="t2" disabled><span class="n">T2</span>The climb</button>
+    <button type="button" data-view="t3a" disabled><span class="n">T3a</span>Summit</button>
+    <button type="button" data-view="carousel" disabled><span class="n">T4–6</span>Carousel</button>
+    <button type="button" data-view="t7" disabled><span class="n">T7</span>Hairpin</button>
+    <button type="button" data-view="t11" disabled><span class="n">T11</span>Hairpin</button>
+  </nav>
+</main>
+
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+</script>
+<script type="module">
+  import * as THREE from "three";
+  import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+  import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+  import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
+  import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+  const MODEL_URL = "sonoma-raceway-web.glb";
+  const canvas = document.getElementById("scene");
+  const bar = document.getElementById("progress");
+  const status = document.getElementById("status");
+  const buttons = [...document.querySelectorAll("#views button")];
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finePointer = matchMedia("(pointer: fine)").matches;
+
+  // Camera views in model metres (x east, y up, z south). Orbit angles follow
+  // the usual convention: theta around the vertical from +z, phi down from straight overhead.
+  const VIEWS = {
+    overview: { target: [-80, 30, 40], theta: 20, phi: 50, radius: 3000, fov: 30 },
+    start:    { target: [300, 22, -20], theta: 120, phi: 72, radius: 100, fov: 35 },
+    t2:       { target: [-150, 50, -33], theta: 150, phi: 62, radius: 170, fov: 35 },
+    t3a:      { target: [-420, 61, -215], theta: 60, phi: 64, radius: 190, fov: 35 },
+    carousel: { target: [-100, 36, -280], theta: 100, phi: 55, radius: 330, fov: 35 },
+    t7:       { target: [-385, 52, -645], theta: 200, phi: 60, radius: 140, fov: 35 },
+    t11:      { target: [445, 20, 220], theta: -20, phi: 62, radius: 160, fov: 35 }
+  };
+
+  function setStatus(text, isError) {
+    status.textContent = text;
+    status.toggleAttribute("data-error", !!isError);
+  }
+
+  // ----- renderer, scene, lights -----
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 0.85;
+  renderer.shadowMap.enabled = finePointer; // phones skip shadows to stay smooth
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  const scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
+  scene.environmentIntensity = 0.45;
+
+  const hemi = new THREE.HemisphereLight(0xdfe8f2, 0x8a7652, 0.7); // clear sky over dry grass
+  scene.add(hemi);
+  const sun = new THREE.DirectionalLight(0xfff1dc, 2.3); // late-afternoon sun from the south-west
+  sun.position.set(-900, 1300, 700);
+  sun.castShadow = finePointer;
+  sun.shadow.mapSize.set(4096, 4096);
+  Object.assign(sun.shadow.camera, { left: -1000, right: 1000, top: 1000, bottom: -1000, near: 100, far: 4000 });
+  sun.shadow.bias = -0.0004;
+  sun.shadow.normalBias = 0.6;
+  scene.add(sun, sun.target);
+
+  function applyThemeColours() {
+    const bg = getComputedStyle(document.body).backgroundColor;
+    scene.fog = new THREE.Fog(new THREE.Color(bg), 3500, 14000);
+  }
+  applyThemeColours();
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyThemeColours);
+  new MutationObserver(applyThemeColours).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  const camera = new THREE.PerspectiveCamera(30, 1, 1, 20000);
+  const controls = new OrbitControls(camera, canvas);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.08;
+  controls.minDistance = 15;
+  controls.maxDistance = 4500;
+  controls.maxPolarAngle = THREE.MathUtils.degToRad(88);
+  controls.screenSpacePanning = false; // pan across the ground, like a map
+  controls.autoRotateSpeed = 0.25;
+  controls.addEventListener("start", () => { controls.autoRotate = false; flight = null; });
+
+  function placement(v) {
+    const t = new THREE.Vector3(...v.target);
+    const th = THREE.MathUtils.degToRad(v.theta), ph = THREE.MathUtils.degToRad(v.phi);
+    const p = new THREE.Vector3(
+      t.x + v.radius * Math.sin(ph) * Math.sin(th),
+      t.y + v.radius * Math.cos(ph),
+      t.z + v.radius * Math.sin(ph) * Math.cos(th)
+    );
+    return { target: t, position: p, fov: v.fov };
+  }
+
+  let flight = null;
+  function show(name, instant) {
+    const v = VIEWS[name];
+    if (!v) return;
+    const to = placement(v);
+    buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.view === name)));
+    controls.autoRotate = name === "overview" && !reduceMotion;
+    if (instant || reduceMotion) {
+      camera.position.copy(to.position);
+      controls.target.copy(to.target);
+      camera.fov = to.fov;
+      camera.updateProjectionMatrix();
+      flight = null;
+      return;
+    }
+    flight = {
+      start: performance.now(), duration: 1400,
+      fromPos: camera.position.clone(), fromTarget: controls.target.clone(), fromFov: camera.fov,
+      to
+    };
+  }
+  const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  buttons.forEach((b) => b.addEventListener("click", () => show(b.dataset.view)));
+  show("overview", true);
+  // Handle for scripted still renders (see README).
+  window.sonomaViewer = { renderer, scene, camera, controls, VIEWS, placement, show };
+
+  function resize() {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    if (canvas.width !== Math.floor(w * renderer.getPixelRatio()) || canvas.height !== Math.floor(h * renderer.getPixelRatio())) {
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+  }
+
+  renderer.setAnimationLoop((now) => {
+    resize();
+    if (flight) {
+      const k = Math.min(1, (now - flight.start) / flight.duration), e = ease(k);
+      camera.position.lerpVectors(flight.fromPos, flight.to.position, e);
+      controls.target.lerpVectors(flight.fromTarget, flight.to.target, e);
+      camera.fov = flight.fromFov + (flight.to.fov - flight.fromFov) * e;
+      camera.updateProjectionMatrix();
+      if (k === 1) flight = null;
+    }
+    controls.update();
+    renderer.render(scene, camera);
+  });
+
+  // ----- model: the web-optimised GLB (meshopt geometry, WebP textures) -----
+  async function loadModel() {
+    await MeshoptDecoder.ready;
+    const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+    const gltf = await loader.loadAsync(MODEL_URL, (e) => {
+      if (!e.total) return;
+      const p = e.loaded / e.total;
+      bar.style.transform = "scaleX(" + (0.95 * p) + ")";
+      setStatus("Loading the model… " + Math.round(95 * p) + "%");
+    });
+
+    gltf.scene.traverse((o) => {
+      if (!o.isMesh) return;
+      const base = /^(terrain|base_)/.test(o.name) || /^(terrain|base_)/.test(o.parent && o.parent.name || "");
+      o.castShadow = !base;
+      o.receiveShadow = true;
+    });
+    scene.add(gltf.scene);
+  }
+
+  loadModel().then(() => {
+    bar.style.transform = "scaleX(1)";
+    bar.setAttribute("data-done", "");
+    buttons.forEach((b) => (b.disabled = false));
+    setStatus("Model loaded. Pick a view or explore freely.");
+  }).catch((err) => {
+    console.error(err);
+    bar.setAttribute("data-done", "");
+    setStatus("The 3D model couldn't load here (" + err.message + "). Try a current Chrome, Safari or Firefox.", true);
+  });
+</script>
 </body>
 </html>

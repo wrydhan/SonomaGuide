@@ -1,0 +1,474 @@
+{
+ "model": "sonoma-raceway.glb",
+ "tolerances": {
+  "gapM": 0.1,
+  "stepM": 0.05,
+  "freeEndM": 3.0
+ },
+ "roadEnds": 22,
+ "junctions": 20,
+ "defects": 20,
+ "ends": [
+  {
+   "road": "road_access_nw",
+   "end": 0,
+   "centre": [
+    -607.6,
+    761.1,
+    58.6
+   ],
+   "capWidthM": 5.7,
+   "partner": "road_main",
+   "kind": "free end",
+   "nearestRoadM": 210.3,
+   "defect": false
+  },
+  {
+   "road": "road_access_nw",
+   "end": 1,
+   "centre": [
+    -440.1,
+    631.3,
+    52.31
+   ],
+   "capWidthM": 5.2,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 5,
+   "capVerts": 5,
+   "maxGapM": 0.0,
+   "stepMinM": 2.164,
+   "stepMaxM": 3.013,
+   "defect": true,
+   "problems": [
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_chute",
+   "end": 0,
+   "centre": [
+    -432.0,
+    627.3,
+    46.91
+   ],
+   "capWidthM": 7.0,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 5,
+   "capVerts": 5,
+   "maxGapM": 0.0,
+   "stepMinM": -3.684,
+   "stepMaxM": -2.474,
+   "defect": true,
+   "problems": [
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_chute",
+   "end": 1,
+   "centre": [
+    -268.7,
+    489.8,
+    44.17
+   ],
+   "capWidthM": 7.2,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 4,
+   "capVerts": 5,
+   "maxGapM": 1.71,
+   "stepMinM": 0.07,
+   "stepMaxM": 0.126,
+   "defect": true,
+   "problems": [
+    "gap",
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_esses_link",
+   "end": 0,
+   "centre": [
+    -268.0,
+    489.9,
+    40.96
+   ],
+   "capWidthM": 6.5,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 4,
+   "capVerts": 5,
+   "maxGapM": 0.24,
+   "stepMinM": -3.188,
+   "stepMaxM": -2.832,
+   "defect": true,
+   "problems": [
+    "gap",
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_esses_link",
+   "end": 1,
+   "centre": [
+    -227.6,
+    520.6,
+    40.96
+   ],
+   "capWidthM": 6.6,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 5,
+   "capVerts": 5,
+   "maxGapM": 0.0,
+   "stepMinM": -0.118,
+   "stepMaxM": -0.012,
+   "defect": true,
+   "problems": [
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_se_chicane",
+   "end": 0,
+   "centre": [
+    406.1,
+    -145.8,
+    20.05
+   ],
+   "capWidthM": 7.3,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 4,
+   "capVerts": 5,
+   "maxGapM": 0.72,
+   "stepMinM": -0.161,
+   "stepMaxM": 0.007,
+   "defect": true,
+   "problems": [
+    "gap",
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_se_chicane",
+   "end": 1,
+   "centre": [
+    465.4,
+    -171.2,
+    19.78
+   ],
+   "capWidthM": 7.6,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 5,
+   "capVerts": 5,
+   "maxGapM": 0.0,
+   "stepMinM": -0.277,
+   "stepMaxM": 0.395,
+   "defect": true,
+   "problems": [
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_t10_inner",
+   "end": 0,
+   "centre": [
+    25.5,
+    380.6,
+    31.28
+   ],
+   "capWidthM": 11.0,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 4,
+   "capVerts": 5,
+   "maxGapM": 2.34,
+   "stepMinM": -0.215,
+   "stepMaxM": 0.621,
+   "defect": true,
+   "problems": [
+    "gap",
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_t10_inner",
+   "end": 1,
+   "centre": [
+    189.8,
+    198.6,
+    24.01
+   ],
+   "capWidthM": 11.3,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 3,
+   "capVerts": 5,
+   "maxGapM": 2.12,
+   "stepMinM": 0.32,
+   "stepMaxM": 0.386,
+   "defect": true,
+   "problems": [
+    "gap",
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_t11_hairpin",
+   "end": 0,
+   "centre": [
+    382.4,
+    -63.5,
+    20.05
+   ],
+   "capWidthM": 8.8,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 4,
+   "capVerts": 5,
+   "maxGapM": 1.96,
+   "stepMinM": -0.361,
+   "stepMaxM": 0.064,
+   "defect": true,
+   "problems": [
+    "gap",
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_t11_hairpin",
+   "end": 1,
+   "centre": [
+    440.2,
+    -88.8,
+    20.05
+   ],
+   "capWidthM": 9.2,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 4,
+   "capVerts": 5,
+   "maxGapM": 0.61,
+   "stepMinM": -0.268,
+   "stepMaxM": 0.263,
+   "defect": true,
+   "problems": [
+    "gap",
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_t4_t7_outer",
+   "end": 0,
+   "centre": [
+    -532.0,
+    363.3,
+    60.99
+   ],
+   "capWidthM": 10.1,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 4,
+   "capVerts": 5,
+   "maxGapM": 1.34,
+   "stepMinM": 3.545,
+   "stepMaxM": 4.867,
+   "defect": true,
+   "problems": [
+    "gap",
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_t4_t7_outer",
+   "end": 1,
+   "centre": [
+    -464.2,
+    579.5,
+    49.16
+   ],
+   "capWidthM": 11.1,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 5,
+   "capVerts": 5,
+   "maxGapM": 0.0,
+   "stepMinM": 2.092,
+   "stepMaxM": 2.191,
+   "defect": true,
+   "problems": [
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_t7_cut",
+   "end": 0,
+   "centre": [
+    -413.0,
+    648.7,
+    53.8
+   ],
+   "capWidthM": 10.1,
+   "partner": "road_alt_t7_link",
+   "kind": "junction",
+   "capVertsOverPartner": 3,
+   "capVerts": 5,
+   "maxGapM": 2.45,
+   "stepMinM": 0.298,
+   "stepMaxM": 0.703,
+   "defect": true,
+   "problems": [
+    "gap",
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_t7_cut",
+   "end": 1,
+   "centre": [
+    -367.9,
+    618.0,
+    46.41
+   ],
+   "capWidthM": 9.8,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 3,
+   "capVerts": 5,
+   "maxGapM": 2.75,
+   "stepMinM": -0.807,
+   "stepMaxM": -0.747,
+   "defect": true,
+   "problems": [
+    "gap",
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_t7_link",
+   "end": 0,
+   "centre": [
+    -415.5,
+    648.2,
+    52.96
+   ],
+   "capWidthM": 9.0,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 5,
+   "capVerts": 5,
+   "maxGapM": 0.0,
+   "stepMinM": -2.654,
+   "stepMaxM": -1.63,
+   "defect": true,
+   "problems": [
+    "step"
+   ]
+  },
+  {
+   "road": "road_alt_t7_link",
+   "end": 1,
+   "centre": [
+    -399.2,
+    637.1,
+    53.98
+   ],
+   "capWidthM": 7.7,
+   "partner": "road_alt_t7_cut",
+   "kind": "junction",
+   "capVertsOverPartner": 5,
+   "capVerts": 5,
+   "maxGapM": 0.0,
+   "stepMinM": 2.558,
+   "stepMaxM": 2.692,
+   "defect": true,
+   "problems": [
+    "step"
+   ]
+  },
+  {
+   "road": "road_drag_strip",
+   "end": 0,
+   "centre": [
+    359.4,
+    -0.8,
+    20.66
+   ],
+   "capWidthM": 12.6,
+   "partner": "road_main",
+   "kind": "free end",
+   "nearestRoadM": 4.7,
+   "defect": false
+  },
+  {
+   "road": "road_drag_strip",
+   "end": 1,
+   "centre": [
+    -72.9,
+    341.0,
+    29.99
+   ],
+   "capWidthM": 12.6,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 4,
+   "capVerts": 5,
+   "maxGapM": 3.9,
+   "stepMinM": -0.072,
+   "stepMaxM": 0.39,
+   "defect": true,
+   "problems": [
+    "gap",
+    "step"
+   ]
+  },
+  {
+   "road": "road_pit_lane",
+   "end": 0,
+   "centre": [
+    5.3,
+    134.1,
+    31.66
+   ],
+   "capWidthM": 12.0,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 3,
+   "capVerts": 5,
+   "maxGapM": 5.02,
+   "stepMinM": -0.6,
+   "stepMaxM": -0.573,
+   "defect": true,
+   "problems": [
+    "gap",
+    "step"
+   ]
+  },
+  {
+   "road": "road_pit_lane",
+   "end": 1,
+   "centre": [
+    466.2,
+    -127.3,
+    19.99
+   ],
+   "capWidthM": 10.9,
+   "partner": "road_main",
+   "kind": "junction",
+   "capVertsOverPartner": 2,
+   "capVerts": 5,
+   "maxGapM": 6.84,
+   "stepMinM": -0.128,
+   "stepMaxM": -0.086,
+   "defect": true,
+   "problems": [
+    "gap",
+    "step"
+   ]
+  }
+ ]
+}
