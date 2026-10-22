@@ -46,7 +46,7 @@ The Modeler output had defects at all 18 places where a branch road (alternate l
 - Kerbs follow their own branch. Walls, guardrails, trees and tyre stacks re-ground on the new terrain. The drag strip's centre line stops at the main track edge.
 - The duplicate `road_alt_t7_link` piece was removed. Nothing else changed: the main circuit, buildings, materials and UVs are untouched.
 
-`tools/check_junctions.py` measures every road end. All 18 joined ends now sit on (or just under) the road they join with no gap; before the repair, all 18 failed. The repair then went through five rounds of adversarial visual review, with reviewers comparing before/after renders of each junction from two sides.
+`tools/check_junctions.py` measures every road end. Seventeen of the 18 joined ends pass the current checker. The drag-strip join retains one corner 3.90 m outside the main-road surface while its other end vertices overlap at a 10 cm tuck; this remaining verge corner is listed below. Before the repair, all 18 failed. The repair then went through five rounds of adversarial visual review, with reviewers comparing before/after renders of each junction from two sides.
 
 | | | |
 | --- | --- | --- |
@@ -59,7 +59,7 @@ The Modeler output had defects at all 18 places where a branch road (alternate l
 
 ### Known remaining issues
 
-The repair removed every floating slab, cliff, wedge gap and stacked piece. Review still finds smaller flaws, mostly from the model's coarse 3 m road and terrain meshes:
+The repair removed the large floating slabs, cliffs and stacked duplicate, and closed the branch-road wedge gaps except for the retained drag-strip verge corner. Review still finds smaller flaws, mostly from the model's coarse 3 m road and terrain meshes:
 
 - Some branch roads still show a thin band of their grey sloped sides above the ground, with a slightly sawtoothed lower edge where the terrain meets them. Several roads elsewhere on the model look the same.
 - The access road at the north-west crossing keeps the ragged edges it had in the original model, and it meets the main kerb with a slight lip.
@@ -67,6 +67,10 @@ The repair removed every floating slab, cliff, wedge gap and stacked piece. Revi
 - Beside the pit-lane tapers, the newly graded embankment is steep enough to show a grey-blue shading patch, and the pit lane meets the main track's edge with small notches.
 - The drag strip ends as a short slab on the verge beside the track, and a guardrail crosses it. Both come from the original model.
 - A few guardrails and walls bend slightly where they re-ground on changed terrain.
+
+## Second Mint revision
+
+The second revision finished on October 21, 2026. It improved heights compared with the original but failed 17 of 18 joined-end checks, versus one flagged end in the published local repair. The current repaired models are retained. See the [review, measurements and 64-view comparison](reference/revision-2-review/README.md) for the results and limits of those checks.
 
 ## How it was made
 

@@ -1,0 +1,42 @@
+{
+  "road_main": {
+    "old_vertices": 48260,
+    "new_vertices": 58307,
+    "old_faces": 24816,
+    "new_faces": 24816,
+    "vertex_positions_equal_0_1mm": true,
+    "bounds_max_difference_m": 0.0
+  },
+  "buildings_bld_00_hospitality": {
+    "old_vertices": 35,
+    "new_vertices": 35,
+    "old_faces": 19,
+    "new_faces": 19,
+    "vertex_positions_equal_0_1mm": true,
+    "bounds_max_difference_m": 0.0
+  },
+  "grandstands_bld_03_grandstand_stand": {
+    "old_vertices": 20472,
+    "new_vertices": 23229,
+    "old_faces": 10268,
+    "new_faces": 10268,
+    "vertex_positions_equal_0_1mm": true,
+    "bounds_max_difference_m": 0.0
+  },
+  "terrain": {
+    "old_vertices": 228131,
+    "new_vertices": 253998,
+    "old_faces": 455269,
+    "new_faces": 455269,
+    "vertex_positions_equal_0_1mm": false,
+    "bounds_max_difference_m": 0.0
+  },
+  "road_access_nw": {
+    "old_vertices": 1545,
+    "new_vertices": 2055,
+    "old_faces": 1272,
+    "new_faces": 1272,
+    "vertex_positions_equal_0_1mm": false,
+    "bounds_max_difference_m": 2.994823455810547
+  }
+}
