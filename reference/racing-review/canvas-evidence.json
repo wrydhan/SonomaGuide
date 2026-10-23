@@ -1,0 +1,50 @@
+{
+  "driver.png": {
+    "size": [
+      1440,
+      900
+    ],
+    "central_rgb_stddev": [
+      65.81350273473734,
+      66.47462074725775,
+      67.53805650265662
+    ],
+    "nonblank": true
+  },
+  "chase.png": {
+    "size": [
+      1440,
+      900
+    ],
+    "central_rgb_stddev": [
+      43.01404228723587,
+      44.107660538315095,
+      43.6427393628906
+    ],
+    "nonblank": true
+  },
+  "mobile-landscape.png": {
+    "size": [
+      844,
+      390
+    ],
+    "central_rgb_stddev": [
+      63.002223533475686,
+      62.89441407929285,
+      63.476313553424305
+    ],
+    "nonblank": true
+  },
+  "mobile-portrait.png": {
+    "size": [
+      390,
+      844
+    ],
+    "central_rgb_stddev": [
+      68.04199616164746,
+      67.31905895959724,
+      67.75912809574884
+    ],
+    "nonblank": true
+  }
+}

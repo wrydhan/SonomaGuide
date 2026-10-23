@@ -1,0 +1,10 @@
+{
+  "asset": "blue-roadster.glb",
+  "source": "Existing user-provided export Downloads/v1.glb",
+  "sourceFilename": "v1.glb",
+  "sha256": "339d95cc93936a32cc397fbd65b1050a049ac573cd2c67cea4f1e977afc491c0",
+  "bytes": 13459744,
+  "geometry": "Original GLB unchanged; Y-up, +Z forward, wheel pivots wheel_FL/wheel_FR/wheel_RL/wheel_RR",
+  "integration": "Driver eye at (+0.36, 1.16, -0.55) metres; full model remains visible in first-person and chase modes.",
+  "generation": "No new paid generation or conversion was requested."
+}

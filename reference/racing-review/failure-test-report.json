@@ -1,0 +1,5 @@
+{
+  "injected": "car GLB 404",
+  "startDisabled": true,
+  "status": "Could not load the circuit or car. Reload to try again. fetch for \"http://127.0.0.1:8882/racing/assets/blue-roadster.glb\" responded with 404: Not Found"
+}

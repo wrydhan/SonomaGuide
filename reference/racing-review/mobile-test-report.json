@@ -1,0 +1,76 @@
+{
+  "mobileAccelerate": {
+    "loaded": true,
+    "running": true,
+    "frame": 145,
+    "frameMs": 16.669691430644313,
+    "mode": "driver",
+    "renderer": {
+      "calls": 1062,
+      "triangles": 4758204,
+      "textures": 47,
+      "geometries": 380
+    },
+    "state": {
+      "x": 291.1026568248967,
+      "y": 21.085002669273162,
+      "z": -30.252994382980244,
+      "yaw": -2.2367936398660704,
+      "speed": 13.535004395324862,
+      "index": 7,
+      "s": 14.296492908262405,
+      "lateral": 0.013346365813391284,
+      "elapsed": 2.016666666666662,
+      "lap": 1,
+      "nextGate": 1,
+      "off": false,
+      "travelled": 14.296488595113248,
+      "collisions": 0
+    },
+    "input": {
+      "throttle": 1,
+      "brake": 0,
+      "turn": 0
+    }
+  },
+  "releaseOutside": "pass",
+  "pause": "pass",
+  "restart": "pass",
+  "mobileBounds": [
+    {
+      "x": 16,
+      "y": 748,
+      "w": 64,
+      "h": 64,
+      "right": 80,
+      "bottom": 812
+    },
+    {
+      "x": 89,
+      "y": 748,
+      "w": 64,
+      "h": 64,
+      "right": 153,
+      "bottom": 812
+    },
+    {
+      "x": 233,
+      "y": 748,
+      "w": 66,
+      "h": 80,
+      "right": 299,
+      "bottom": 828
+    },
+    {
+      "x": 308,
+      "y": 748,
+      "w": 66,
+      "h": 80,
+      "right": 374,
+      "bottom": 828
+    }
+  ],
+  "audio": "true",
+  "audioToggle": "pass",
+  "errors": []
+}

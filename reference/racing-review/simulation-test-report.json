@@ -1,0 +1,23 @@
+{
+  "length": 4103.822218488676,
+  "samples": 2068,
+  "acceleration": {
+    "speed": 2.717086906647052,
+    "travelled": 210.48146459993353
+  },
+  "fullLap": {
+    "laps": 1,
+    "seconds": 175.76666666667114,
+    "gate": 1,
+    "steps": 21092,
+    "peakLateral": 2.399073955047531,
+    "peakSpeed": 36.73629511602173,
+    "collisions": 0,
+    "travelled": 4094.2011393601742
+  },
+  "reset": "pass",
+  "boundary": {
+    "collisions": 18,
+    "lateral": 6.132003225567459
+  }
+}

@@ -136,6 +136,8 @@
   @media (max-width: 420px) {
     .specs { display: none; }
   }
+  .race-link { display: inline-block; padding: 10px 14px; background: var(--fg); color: var(--bg); font: 500 12px var(--body); text-decoration: none; border-radius: 3px; }
+  .race-link:focus-visible { outline: 3px solid var(--kerb); outline-offset: 3px; }
 </style>
 </head>
 <body>
@@ -154,6 +156,7 @@
     </dl>
     <p class="status" id="status" role="status">Loading the model…</p>
     <p class="note">Drag to orbit, scroll or pinch to zoom, right-drag or two-finger drag to pan. Pick a corner below to fly there.</p>
+    <p><a class="race-link" href="racing/">Drive the circuit · first person ↗</a></p>
   </section>
 
   <p class="credit">Layout © OpenStreetMap contributors · Terrain: Copernicus DEM · Built with Mint Modeler</p>

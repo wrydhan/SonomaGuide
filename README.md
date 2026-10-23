@@ -25,6 +25,12 @@ python3 -m http.server 8000
 
 To publish it, turn on GitHub Pages for this repository (Settings → Pages → Deploy from branch → `main`, folder `/ (root)`). It will then be live at `https://wrydhan.github.io/SonomaGuide/` with no build step.
 
+## Drive it
+
+Open [`racing/`](racing/) for a first-person time trial in the blue open-top car, or click **Drive the circuit** in the viewer. Use W/A/S/D or arrow keys to drive, Space to brake, R to recover (+5 seconds), C for the chase camera, and Escape to pause. Touch controls are available on phones. Complete the ordered checkpoints to record a lap and a best time on this device.
+
+This is an arcade driving mode with sampled elevation, crossfall, runoff and roadside limits. It uses the same repaired track; the model's known visual issues remain. See the [driving guide](racing/README.md) and [verification evidence](reference/racing-review/README.md).
+
 ## The model
 
 | File | What it is |

@@ -1,0 +1,105 @@
+{
+  "ready": {
+    "loaded": true,
+    "running": true,
+    "frame": 74,
+    "frameMs": 17.272480001529683,
+    "mode": "driver",
+    "renderer": {
+      "calls": 1030,
+      "triangles": 4604218,
+      "textures": 49,
+      "geometries": 444
+    },
+    "state": {
+      "x": 302.344,
+      "y": 21.084,
+      "z": -21.42,
+      "yaw": -2.2367936398660704,
+      "speed": 0,
+      "index": 2067,
+      "s": 4103.822218488676,
+      "lateral": 0,
+      "elapsed": 0,
+      "lap": 1,
+      "nextGate": 1,
+      "off": false,
+      "travelled": 0,
+      "collisions": 0
+    },
+    "input": {
+      "throttle": 0,
+      "brake": 0,
+      "turn": 0
+    }
+  },
+  "accelerated": {
+    "loaded": true,
+    "running": true,
+    "frame": 315,
+    "frameMs": 16.66517705658286,
+    "mode": "driver",
+    "renderer": {
+      "calls": 944,
+      "triangles": 4438408,
+      "textures": 49,
+      "geometries": 444
+    },
+    "state": {
+      "x": 261.5464759441844,
+      "y": 21.138536742306915,
+      "z": -53.47705005275832,
+      "yaw": -2.2367936398660704,
+      "speed": 23.438531050179837,
+      "index": 25,
+      "s": 51.885499262356554,
+      "lateral": 0.09635349264721725,
+      "elapsed": 4.016666666666656,
+      "lap": 1,
+      "nextGate": 1,
+      "off": false,
+      "travelled": 51.88537777803995,
+      "collisions": 0
+    },
+    "input": {
+      "throttle": 0,
+      "brake": 0,
+      "turn": 0
+    }
+  },
+  "braked": {
+    "loaded": true,
+    "running": true,
+    "frame": 393,
+    "frameMs": 16.66817036361061,
+    "mode": "driver",
+    "renderer": {
+      "calls": 924,
+      "triangles": 4315432,
+      "textures": 49,
+      "geometries": 444
+    },
+    "state": {
+      "x": 249.4782102296344,
+      "y": 21.22063022207097,
+      "z": -62.959806837999274,
+      "yaw": -2.2367936398660704,
+      "speed": 0.5290597917999533,
+      "index": 33,
+      "s": 67.23306953574763,
+      "lateral": 0.15986764106768953,
+      "elapsed": 5.316666666666721,
+      "lap": 1,
+      "nextGate": 1,
+      "off": false,
+      "travelled": 67.23352794687192,
+      "collisions": 0
+    },
+    "input": {
+      "throttle": 0,
+      "brake": 0,
+      "turn": 0
+    }
+  },
+  "errors": []
+}

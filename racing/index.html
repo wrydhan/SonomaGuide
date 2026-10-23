@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#10191b"><title>Sonoma · Driver’s seat</title><link rel="icon" href="data:,"><link rel="stylesheet" href="race.css"><script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script></head>
+<body>
+<canvas id="world" aria-label="First-person driving at Sonoma Raceway"></canvas>
+<div id="hud" hidden>
+ <div class="topline"><div class="identity"><span class="eyebrow">SONOMA RACEWAY</span><span id="lap-label">TIME TRIAL / LAP 01</span></div><div class="timing"><span class="eyebrow">CURRENT LAP</span><strong id="time">00:00.000</strong><span class="best">BEST <b id="best">—</b></span></div></div>
+ <div class="map-box"><canvas id="map" width="280" height="300" aria-label="Circuit map with current car position"></canvas><span id="progress-label">0% COMPLETE</span></div>
+ <div id="notice" role="status"></div>
+ <div class="driving-info"><span id="surface">ON CIRCUIT</span><div class="speed"><strong id="speed">0</strong><span>KM/H</span></div><div id="rpm"><i></i></div><span id="corner">FRONT STRAIGHT</span></div>
+ <div class="actions"><button id="pause" title="Pause (Escape)">Pause</button><button id="camera" title="Change camera (C)">Chase view</button><button id="line" aria-pressed="true">Guide on</button><button id="sound" aria-pressed="false">Sound on</button><button id="recover" title="Recover (R)">Recover +5s</button></div>
+ <div id="touch" aria-label="Touch driving controls"><div><button data-control="left" aria-label="Steer left">←</button><button data-control="right" aria-label="Steer right">→</button></div><div><button class="pedal brake" data-control="brake">BRAKE</button><button class="pedal gas" data-control="throttle">GAS</button></div></div>
+</div>
+<section id="menu" class="menu"><div class="menu-inner"><span class="eyebrow">SONOMA / CALIFORNIA</span><h1>Driver’s seat.</h1><p class="intro">An open roadster. A winding circuit.<br>Just you against the clock.</p><div class="rule"></div><p id="load-status" role="status">Loading circuit and car…</p><progress id="loading" max="100" value="0"></progress><div class="controls"><span><b>W / ↑</b> Accelerate</span><span><b>S / ↓ / SPACE</b> Brake</span><span><b>A D / ← →</b> Steer</span><span><b>R</b> Recover · +5s</span><span><b>C</b> Camera</span><span><b>ESC</b> Pause</span></div><button id="start" class="primary" disabled>Take the wheel <span>↗</span></button><button id="restart" hidden>Start a fresh lap</button><a href="../index.html">Explore the track ↗</a><p class="fine">Grip racing · sequential lap checkpoints · best time saved on this device</p></div></section>
+<div id="fatal" hidden role="alert"></div>
+<script type="module" src="race.js"></script>
+</body></html>
