@@ -2,9 +2,13 @@ import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {MeshoptDecoder} from 'three/addons/libs/meshopt_decoder.module.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+import {CARS,initialCar} from './cars.js';
 import {Circuit,Driving,clamp,angle,wrap,formatTime} from './simulation.js';
 const $=id=>document.getElementById(id),canvas=$('world');
 const coarse=matchMedia('(pointer:coarse)').matches;
+let circuitReady=false;
+let selectedId=initialCar(),spec=CARS[selectedId];
+$('car-choice').value=selectedId;
 const debug=new URLSearchParams(location.search).has('debug');
 let renderer;
 try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});}catch(e){$('load-status').textContent='WebGL is unavailable. Try a current browser with graphics acceleration enabled.';throw e;}
@@ -16,7 +20,7 @@ const hemi=new THREE.HemisphereLight(0xdcebf5,0x9b8052,1.3);scene.add(hemi);
 const sun=new THREE.DirectionalLight(0xffefd5,2.4);sun.position.set(-900,1300,700);sun.castShadow=!coarse;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-1000,right:1000,top:1000,bottom:-1000,near:100,far:4000});sun.shadow.bias=-.0003;sun.shadow.normalBias=.5;scene.add(sun,sun.target);
 const pmrem=new THREE.PMREMGenerator(renderer),room=new RoomEnvironment();const env=pmrem.fromScene(room,.04);scene.environment=env.texture;scene.environmentIntensity=.5;room.dispose();pmrem.dispose();
 const car=new THREE.Group();scene.add(car);
-let track,sim,carModel,wheels=[],frontWheels=[],running=false,loaded=false,mode='driver',guide,guideOn=true,frames=0,last=0,accumulator=0,spin=0,loadingCar=0,loadingTrack=0;
+let track,sim,carModel,wheels=[],frontWheels=[],running=false,loaded=false,mode='driver',guide,guideOn=true,frames=0,last=0,accumulator=0,spin=0,loadingCar=0,loadingTrack=0,cockpitMasks=[],cockpitGlass=new Map();
 const keys=new Set(),touch=new Set();
 const input=()=>({throttle:Number(keys.has('KeyW')||keys.has('ArrowUp')||touch.has('throttle')),brake:Number(keys.has('KeyS')||keys.has('ArrowDown')||keys.has('Space')||touch.has('brake')),turn:Number(keys.has('KeyA')||keys.has('ArrowLeft')||touch.has('left'))-Number(keys.has('KeyD')||keys.has('ArrowRight')||touch.has('right'))});
 const clearInput=()=>{keys.clear();touch.clear();document.querySelectorAll('.held').forEach(x=>x.classList.remove('held'));};
@@ -38,9 +42,15 @@ class EngineAudio{
 const audio=new EngineAudio();$('sound').onclick=()=>{audio.enabled=!audio.enabled;audio.unlock();$('sound').textContent=audio.enabled?'Sound off':'Sound on';$('sound').setAttribute('aria-pressed',String(audio.enabled));if(!audio.enabled)audio.set(false,0,0);};
 function loading(){const p=Math.round((loadingCar+loadingTrack)*50);$('loading').value=p;}
 async function loadGLB(url,onProgress){return new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(url,e=>{if(e.total){onProgress(e.loaded/e.total);loading();}});}
-const previewPosition=new THREE.Vector3(0,1,0),look=new THREE.Vector3(),forward=new THREE.Vector3(),up=new THREE.Vector3(0,1,0),localEye=new THREE.Vector3(.36,1.16,-.55),localLook=new THREE.Vector3(.36,1.12,35),chaseEye=new THREE.Vector3(0,3.5,-9),chaseLook=new THREE.Vector3(0,1,14);
-function updatePose(dt,snap=false){if(!sim)return;const s=sim.surface;car.position.set(sim.x,sim.y+.045,sim.z);car.rotation.order='YXZ';car.rotation.set(-Math.atan(s.slope),sim.yaw,Math.atan(s.bank),'YXZ');car.updateMatrixWorld(true);
- for(const w of frontWheels)w.rotation.y=sim.steer;for(const w of wheels){for(const child of w.children){child.rotation.x=spin;}}
+function disposeVehicle(model){const geometry=new Set(),materials=new Set(),textures=new Set();model.traverse(o=>{if(!o.isMesh)return;geometry.add(o.geometry);for(const m of Array.isArray(o.material)?o.material:[o.material]){materials.add(m);for(const v of Object.values(m))if(v?.isTexture)textures.add(v);}});geometry.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());textures.forEach(t=>t.dispose());}
+function installVehicle(vehicle){const previous=carModel;carModel=vehicle.scene;carModel.rotation.y=spec.yaw;wheels=[];frontWheels=[];cockpitMasks=[];cockpitGlass=new Map();carModel.traverse(o=>{if(o.isMesh){o.castShadow=false;o.receiveShadow=true;}if(spec.hideInDriver?.some(n=>o.name.startsWith(n)))cockpitMasks.push(o);if(o.isMesh&&spec.clearInDriver?.some(n=>o.name.startsWith(n))){for(const m of Array.isArray(o.material)?o.material:[o.material])if(!cockpitGlass.has(m))cockpitGlass.set(m,{opacity:m.opacity,depthWrite:m.depthWrite});}if(/^wheel_[FR][LR]$/.test(o.name)){wheels.push(o);if(o.name.startsWith('wheel_F'))frontWheels.push(o);}});car.add(carModel);if(previous){car.remove(previous);disposeVehicle(previous);}localEye.set(...spec.eye);localLook.set(...spec.look);}
+$('car-choice').addEventListener('change',async()=>{const id=$('car-choice').value;if(!CARS[id]||id===selectedId)return;if(!circuitReady){const u=new URL(location.href);u.searchParams.set('car',id);location.assign(u);return;}pause();loaded=false;clearInput();$('start').disabled=true;$('car-choice').disabled=true;$('load-status').textContent='Loading '+CARS[id].name+'…';$('loading').hidden=false;loadingCar=0;loading();
+ try{const vehicle=await loadGLB(CARS[id].url,p=>loadingCar=p);selectedId=id;spec=CARS[id];installVehicle(vehicle);sim=new Driving(track,spec.bestKey);spin=0;updatePose(1,true);loaded=true;loadingCar=1;loading();$('start').disabled=false;$('start').innerHTML='Take the wheel <span>↗</span>';$('restart').hidden=true;$('load-status').textContent='READY · '+spec.name+' / full circuit';updateHUD();try{localStorage.setItem('sonoma.car',id);}catch{}const u=new URL(location.href);u.searchParams.set('car',id);history.replaceState(null,'',u);
+ }catch(e){console.error(e);$('car-choice').value=selectedId;loaded=!!carModel;$('start').disabled=!loaded;$('load-status').textContent='Could not load that car. '+(loaded?'Your previous car is still ready.':'Choose another car or reload to retry.');}
+ finally{$('car-choice').disabled=false;}});
+const previewPosition=new THREE.Vector3(0,1,0),look=new THREE.Vector3(),forward=new THREE.Vector3(),up=new THREE.Vector3(0,1,0),localEye=new THREE.Vector3(...spec.eye),localLook=new THREE.Vector3(...spec.look),chaseEye=new THREE.Vector3(0,3.5,-9),chaseLook=new THREE.Vector3(0,1,14);
+function updatePose(dt,snap=false){if(!sim)return;const driver=mode==='driver'&&running;for(const o of cockpitMasks)o.visible=!driver;for(const [m,original]of cockpitGlass){m.opacity=driver?.08:original.opacity;m.depthWrite=driver?false:original.depthWrite;}const s=sim.surface;car.position.set(sim.x,sim.y+.045,sim.z);car.rotation.order='YXZ';car.rotation.set(-Math.atan(s.slope),sim.yaw,Math.atan(s.bank),'YXZ');car.updateMatrixWorld(true);
+ for(const w of frontWheels)w.rotation.y=sim.steer;for(const w of wheels){for(const child of w.children){child.rotation.x=spin*spec.spinSign;}}
  const eye=car.localToWorld((mode==='driver'?localEye:chaseEye).clone()),target=car.localToWorld((mode==='driver'?localLook:chaseLook).clone());
  if(mode==='driver'||snap)camera.position.copy(eye);else camera.position.lerp(eye,1-Math.exp(-dt*7));camera.up.copy(up);camera.lookAt(target);camera.fov=mode==='driver'?68:58;camera.updateProjectionMatrix();
 }
@@ -52,19 +62,19 @@ function updateHUD(){if(!sim)return;$('speed').textContent=Math.round(sim.speed*
 function resize(){const w=innerWidth,h=innerHeight;if(canvas.width!==Math.floor(w*renderer.getPixelRatio())||canvas.height!==Math.floor(h*renderer.getPixelRatio())){renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}}
 let hudTimer=0,frameMs=0;
 renderer.setAnimationLoop(now=>{const dt=last?Math.min((now-last)/1000,.08):0;last=now;frames++;frameMs+=(dt*1000-frameMs)*.05;resize();
- if(running&&sim){const intents=input();accumulator+=dt;while(accumulator>=1/120){sim.tick(intents,1/120);spin+=sim.speed/0.394/120;accumulator-=1/120;}updatePose(dt);audio.set(true,sim.speed,intents.throttle);hudTimer+=dt;if(hudTimer>.05){updateHUD();hudTimer=0;}}
+ if(running&&sim){const intents=input();accumulator+=dt;while(accumulator>=1/120){sim.tick(intents,1/120);spin+=sim.speed/spec.radius/120;accumulator-=1/120;}updatePose(dt);audio.set(true,sim.speed,intents.throttle);hudTimer+=dt;if(hudTimer>.05){updateHUD();hudTimer=0;}}
  renderer.render(scene,camera);
 });
 // Compact diagnostics are available only with ?debug; no runtime menus or secrets.
-if(debug){window.__THREE_GAME_DIAGNOSTICS__=()=>({loaded,running,frame:frames,frameMs,mode,renderer:{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,textures:renderer.info.memory.textures,geometries:renderer.info.memory.geometries},state:sim?{x:sim.x,y:sim.y,z:sim.z,yaw:sim.yaw,speed:sim.speed,index:sim.index,s:sim.surface.s,lateral:sim.surface.lateral,elapsed:sim.elapsed,lap:sim.lap,nextGate:sim.nextGate,off:sim.off,travelled:sim.travelled,collisions:sim.collisions}:null,input:input()});window.__THREE_GAME_TEST_HOOKS__={seed(){return 1;},setState(distance,speed=0){if(!sim)return;const p=track.at(distance);sim.x=p.x;sim.z=p.z;sim.yaw=p.heading;sim.index=p.i;sim.speed=speed;sim.surface=track.sample(p.x,p.z,p.i);sim.lastS=sim.surface.s;sim.safe={...p};updatePose(1,true);},get track(){return track;},get sim(){return sim;},get camera(){return camera;},get car(){return car;}};}
-(async()=>{try{const data=await fetch('route.json').then(r=>{if(!r.ok)throw Error('Circuit route could not load');return r.json();});track=new Circuit(data);sim=new Driving(track);await MeshoptDecoder.ready;
- const [level,vehicle]=await Promise.all([loadGLB('../sonoma-raceway-web.glb',p=>loadingTrack=p),loadGLB('assets/blue-roadster.glb',p=>loadingCar=p)]);
- level.scene.traverse(o=>{if(o.isMesh){const base=/^(terrain|base_)/.test(o.name)||/^(terrain|base_)/.test(o.parent?.name||'');o.castShadow=!base;o.receiveShadow=true;}});scene.add(level.scene);
+if(debug){window.__THREE_GAME_DIAGNOSTICS__=()=>({loaded,running,frame:frames,frameMs,mode,car:selectedId,renderer:{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,textures:renderer.info.memory.textures,geometries:renderer.info.memory.geometries},state:sim?{x:sim.x,y:sim.y,z:sim.z,yaw:sim.yaw,speed:sim.speed,index:sim.index,s:sim.surface.s,lateral:sim.surface.lateral,elapsed:sim.elapsed,lap:sim.lap,nextGate:sim.nextGate,off:sim.off,travelled:sim.travelled,collisions:sim.collisions}:null,input:input()});window.__THREE_GAME_TEST_HOOKS__={seed(){return 1;},setState(distance,speed=0){if(!sim)return;const p=track.at(distance);sim.x=p.x;sim.z=p.z;sim.yaw=p.heading;sim.index=p.i;sim.speed=speed;sim.surface=track.sample(p.x,p.z,p.i);sim.lastS=sim.surface.s;sim.safe={...p};updatePose(1,true);},get track(){return track;},get sim(){return sim;},get camera(){return camera;},get car(){return car;}};}
+(async()=>{try{const data=await fetch('route.json').then(r=>{if(!r.ok)throw Error('Circuit route could not load');return r.json();});track=new Circuit(data);sim=new Driving(track,spec.bestKey);await MeshoptDecoder.ready;
+ const [level,vehicle]=await Promise.all([loadGLB('../sonoma-raceway-web.glb',p=>loadingTrack=p),loadGLB(spec.url,p=>loadingCar=p)]);
+ level.scene.traverse(o=>{if(o.isMesh){const base=/^(terrain|base_)/.test(o.name)||/^(terrain|base_)/.test(o.parent?.name||'');o.castShadow=!base;o.receiveShadow=true;}});scene.add(level.scene);circuitReady=true;
  // Batch repeated static trees and tyre stacks in spatial cells. Source GLB is unchanged.
  level.scene.updateMatrixWorld(true);const batches=new Map(),removed=[];
  level.scene.traverse(o=>{if(!o.isMesh||o.isInstancedMesh||Array.isArray(o.material))return;const v=new THREE.Vector3().setFromMatrixPosition(o.matrixWorld);const key=[o.geometry.uuid,o.material.uuid,Math.floor(v.x/250),Math.floor(v.z/250),o.castShadow].join(':');if(!batches.has(key))batches.set(key,[]);batches.get(key).push(o);});
  for(const group of batches.values()){if(group.length<3)continue;const first=group[0],batch=new THREE.InstancedMesh(first.geometry,first.material,group.length);batch.castShadow=first.castShadow;batch.receiveShadow=true;group.forEach((o,i)=>{batch.setMatrixAt(i,o.matrixWorld);removed.push(o);});batch.computeBoundingSphere();scene.add(batch);}
  removed.forEach(o=>o.removeFromParent());
- carModel=vehicle.scene;car.add(carModel);carModel.traverse(o=>{if(o.isMesh){o.castShadow=false;o.receiveShadow=true;}if(/^wheel_[FR][LR]$/.test(o.name)){wheels.push(o);if(o.name.startsWith('wheel_F'))frontWheels.push(o);}});
- makeGuide();loaded=true;updatePose(1,true);camera.position.copy(car.localToWorld(new THREE.Vector3(7,3,8)));camera.lookAt(car.position.clone().add(new THREE.Vector3(0,.7,0)));renderer.shadowMap.needsUpdate=true;loadingCar=loadingTrack=1;loading();$('load-status').textContent='READY · Blue roadster / full circuit';$('start').disabled=false;updateHUD();
- }catch(e){console.error(e);$('load-status').textContent='Could not load the circuit or car. Reload to try again. '+e.message;$('loading').hidden=true;}})();
+ installVehicle(vehicle);
+ makeGuide();loaded=true;updatePose(1,true);camera.position.copy(car.localToWorld(new THREE.Vector3(7,3,8)));camera.lookAt(car.position.clone().add(new THREE.Vector3(0,.7,0)));renderer.shadowMap.needsUpdate=true;loadingCar=loadingTrack=1;loading();$('load-status').textContent='READY · '+spec.name+' / full circuit';$('start').disabled=false;$('car-choice').disabled=false;updateHUD();
+ }catch(e){console.error(e);$('load-status').textContent='Could not load the circuit or car. Reload to try again. '+e.message;$('loading').hidden=true;$('car-choice').disabled=false;}})();

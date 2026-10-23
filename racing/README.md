@@ -1,6 +1,6 @@
 # First-person time trial
 
-Open `racing/` from a static server rooted at this repository. No build step, paid API call, server secret or CDN is needed for this mode. It loads the existing `../sonoma-raceway-web.glb` and the user's existing blue roadster export.
+Open `racing/` from a static server rooted at this repository. No build step, paid API call, server secret or CDN is needed for this mode. It loads the existing `../sonoma-raceway-web.glb` and one selected existing car export: the Porsche 911 GT3 RS Manthey or blue roadster.
 
 ```sh
 python3 -m http.server 8882 --bind 127.0.0.1
@@ -15,6 +15,8 @@ python3 -m http.server 8882 --bind 127.0.0.1
 - Touch buttons provide steering and pedals on phones. Landscape gives a wider driving view.
 - Guide toggles the route arrows. Sound starts/stops a local synthesized engine.
 
+Choose a car in the start/pause menu. A new device defaults to the Porsche; your last selection is remembered. Open `?car=porsche` or `?car=roadster` to select directly. Switching cars starts a fresh lap. Best times are saved separately for each car.
+
 The lap clock starts with throttle. Complete 24 ordered progress gates and cross the finish forward to record a lap. Cutting to the finish or driving backwards does not record a lap. Best time is saved locally when storage is available. There are no opponents in this time-trial mode.
 
 ## Implementation
@@ -25,7 +27,7 @@ The shared surface sampler provides car placement, camera orientation, road stat
 
 `race.js` projects the state into Three.js, animates the imported wheel pivots, handles keyboard/touch/lifecycle input, and updates HUD and audio. Repeated static meshes are batched by geometry/material and 250 m spatial cell. Desktop static shadows render once; phones omit shadows and cap pixel ratio. No source track geometry is modified.
 
-The original car export is unchanged. Its fingerprint and source are in `assets/provenance.json`. Local +Z is forward and +X is the driver's left. Three.js 0.186.1 and the required loaders/utilities are vendored under `vendor/`, with its MIT license retained.
+Both original car exports are unchanged. `cars.js` holds their orientation, driver-eye, wheel and best-record settings. The Porsche uses a first-person visibility adapter for its obstructing interior-shell panel and windscreen opacity; chase view restores the full model. See [Porsche verification](../reference/porsche-review/README.md). Its fingerprint and source are in `assets/provenance.json`. Local +Z is forward and +X is the driver's left. Three.js 0.186.1 and the required loaders/utilities are vendored under `vendor/`, with its MIT license retained.
 
 ## Checks
 

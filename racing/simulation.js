@@ -16,7 +16,7 @@ export class Circuit {
   }
 }
 export class Driving {
-  constructor(circuit){this.track=circuit;this.best=null;try{const x=Number(localStorage.getItem('sonoma.best.v1'));if(x>0&&Number.isFinite(x))this.best=x;}catch{}this.newRun();}
+  constructor(circuit,bestKey='sonoma.best.v1'){this.track=circuit;this.bestKey=bestKey;this.best=null;try{const x=Number(localStorage.getItem(this.bestKey));if(x>0&&Number.isFinite(x))this.best=x;}catch{}this.newRun();}
   newRun(){const p=this.track.at(0);Object.assign(this,{x:p.x,z:p.z,y:p.y,yaw:p.heading,speed:0,steer:0,index:p.i,elapsed:0,lap:1,nextGate:1,laps:0,lastLap:null,penalty:0,started:false,off:false,wrongWay:false,collisions:0,notice:'',noticeTime:0,travelled:0});this.safe={...p};this.lastS=0;this.surface=this.track.sample(this.x,this.z,this.index);}
   recover(){this.x=this.safe.x;this.z=this.safe.z;this.yaw=this.safe.heading;this.index=this.safe.i;this.speed=0;this.steer=0;if(this.started){this.penalty+=5;this.elapsed+=5;}this.notice='BACK ON TRACK · +5 SEC';this.noticeTime=3;this.surface=this.track.sample(this.x,this.z,this.index);this.lastS=this.surface.s;this.y=this.surface.y;this.off=false;this.wrongWay=false;}
   tick(input,dt){const t=this.track,old=this.surface;
@@ -40,7 +40,7 @@ export class Driving {
     const gateSize=t.length/24;
     if(ds>0&&ds<4){
       if(this.nextGate<24&&s.s>=this.nextGate*gateSize&&s.s<this.nextGate*gateSize+10)this.nextGate++;
-      if(this.nextGate===24&&this.lastS>t.length-10&&s.s<10){this.lastLap=this.elapsed;this.laps++;this.lap++;if(!this.best||this.lastLap<this.best){this.best=this.lastLap;try{localStorage.setItem('sonoma.best.v1',String(this.best));}catch{}}this.notice='LAP COMPLETE · '+formatTime(this.lastLap);this.noticeTime=6;this.elapsed=0;this.penalty=0;this.nextGate=1;}
+      if(this.nextGate===24&&this.lastS>t.length-10&&s.s<10){this.lastLap=this.elapsed;this.laps++;this.lap++;if(!this.best||this.lastLap<this.best){this.best=this.lastLap;try{localStorage.setItem(this.bestKey,String(this.best));}catch{}}this.notice='LAP COMPLETE · '+formatTime(this.lastLap);this.noticeTime=6;this.elapsed=0;this.penalty=0;this.nextGate=1;}
     }
     this.lastS=s.s;
   }

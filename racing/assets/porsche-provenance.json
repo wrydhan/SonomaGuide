@@ -1,0 +1,14 @@
+{
+  "asset": "porsche-manthey.glb",
+  "name": "Porsche 911 GT3 RS (992) Manthey Kit",
+  "modelId": "ks767xpeda0gy5cfejnvaarq4d8gtj7a",
+  "mintUrl": "https://mint.gg/0xe6658008c9104e1a98e1972a84a46443f3d7e1b3/ks767xpeda0gy5cfejnvaarq4d8gtj7a",
+  "createdAt": "2026-10-23T16:49:56.305Z",
+  "completedAt": "2026-10-23T18:12:49.310Z",
+  "sha256": "fe4dbdcc61e9233f3bc7859b2ada838a3fe1ef770e5039a7ce4062aacbf20cad",
+  "bytes": 24396116,
+  "source": "Latest completed Porsche revision returned by the Mint model catalog on October 23, 2026.",
+  "normalization": "Original GLB preserved; runtime wrapper rotates Y by pi to normalize -Z-forward to +Z-forward. Wheel nodes retain original pivots.",
+  "camera": "Driver eye (+0.37,1.02,-0.12) metres in normalized space. First-person rendering masks the obstructing interior_shell node and reduces windscreen opacity; full visibility/material opacity restored in chase view. Source GLB unchanged.",
+  "generation": "Retrieved an existing Modeler output; no new paid generation."
+}

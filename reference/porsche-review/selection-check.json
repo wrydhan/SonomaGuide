@@ -1,0 +1,41 @@
+{
+  "separateBestRecords": "pass",
+  "failedSwitchPreservesPreviousCar": "pass",
+  "retry": "pass",
+  "mobile": {
+    "loaded": true,
+    "running": true,
+    "frame": 112,
+    "frameMs": 16.76946093649327,
+    "mode": "driver",
+    "car": "porsche",
+    "renderer": {
+      "calls": 610,
+      "triangles": 2596446,
+      "textures": 48,
+      "geometries": 503
+    },
+    "state": {
+      "x": 298.7890194837969,
+      "y": 21.08400027918375,
+      "z": -24.21336040561173,
+      "yaw": -2.2367936398660704,
+      "speed": 7.231229487235983,
+      "index": 2,
+      "s": 4.5211431333717345,
+      "lateral": 0.002592420542315112,
+      "elapsed": 1.1166666666666651,
+      "lap": 1,
+      "nextGate": 1,
+      "off": false,
+      "travelled": 4.521144636729052,
+      "collisions": 0
+    },
+    "input": {
+      "throttle": 0,
+      "brake": 0,
+      "turn": 0
+    }
+  },
+  "mobileErrors": []
+}

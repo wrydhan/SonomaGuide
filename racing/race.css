@@ -3,3 +3,5 @@
 #touch{pointer-events:none} #touch>div{pointer-events:none} #touch button{pointer-events:auto}
 @media(pointer:coarse) and (min-height:551px){.actions{top:108px;bottom:auto;left:16px;display:grid;grid-template-columns:1fr 1fr;max-width:none;width:165px;gap:5px}.actions button{font-size:9px;padding:7px;min-height:36px}.actions #recover{grid-column:1 / -1}}
 @media(pointer:coarse) and (max-height:550px){.map-box{display:none}.driving-info{bottom:96px}}
+
+.car-picker{display:grid;gap:8px;margin:15px 0;font:600 10px ui-monospace,monospace;letter-spacing:1px;color:#d9e4dc}.car-picker select{font:500 13px system-ui,sans-serif;letter-spacing:0;color:#f1f5ec;background:#1b2c30;border:1px solid #8caaa0;padding:12px;border-radius:3px;width:100%;min-height:44px}.car-picker select:focus-visible{outline:3px solid #d8eea4;outline-offset:3px}.car-picker span{font:10px/1.4 ui-monospace,monospace;font-weight:400;letter-spacing:0;color:#a9bbb3}@media(max-height:550px){.car-picker{margin:10px 0;gap:4px}.car-picker select{padding:8px}.car-picker span{display:none}}

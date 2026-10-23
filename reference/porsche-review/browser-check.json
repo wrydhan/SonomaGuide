@@ -1,0 +1,143 @@
+{
+  "porsche": {
+    "loaded": true,
+    "running": true,
+    "frame": 73,
+    "frameMs": 18.03639371110764,
+    "mode": "driver",
+    "car": "porsche",
+    "renderer": {
+      "calls": 582,
+      "triangles": 2510789,
+      "textures": 50,
+      "geometries": 567
+    },
+    "state": {
+      "x": 302.344,
+      "y": 21.084,
+      "z": -21.42,
+      "yaw": -2.2367936398660704,
+      "speed": 0,
+      "index": 2067,
+      "s": 4103.822218488676,
+      "lateral": 0,
+      "elapsed": 0,
+      "lap": 1,
+      "nextGate": 1,
+      "off": false,
+      "travelled": 0,
+      "collisions": 0
+    },
+    "input": {
+      "throttle": 0,
+      "brake": 0,
+      "turn": 0
+    }
+  },
+  "accelerated": {
+    "loaded": true,
+    "running": true,
+    "frame": 193,
+    "frameMs": 16.672558425439238,
+    "mode": "driver",
+    "car": "porsche",
+    "renderer": {
+      "calls": 569,
+      "triangles": 2488756,
+      "textures": 50,
+      "geometries": 567
+    },
+    "state": {
+      "x": 291.27971493755797,
+      "y": 21.085002655358704,
+      "z": -30.113869254404708,
+      "yaw": -2.2367936398660704,
+      "speed": 13.437775559307589,
+      "index": 7,
+      "s": 14.071314375049267,
+      "lateral": 0.013276793508307017,
+      "elapsed": 1.9999999999999953,
+      "lap": 1,
+      "nextGate": 1,
+      "off": false,
+      "travelled": 14.071310051152404,
+      "collisions": 0
+    },
+    "input": {
+      "throttle": 0,
+      "brake": 0,
+      "turn": 0
+    }
+  },
+  "roadster": {
+    "loaded": true,
+    "running": false,
+    "frame": 230,
+    "frameMs": 16.66791621085748,
+    "mode": "chase",
+    "car": "roadster",
+    "renderer": {
+      "calls": 990,
+      "triangles": 4512624,
+      "textures": 49,
+      "geometries": 444
+    },
+    "state": {
+      "x": 302.344,
+      "y": 21.084,
+      "z": -21.42,
+      "yaw": -2.2367936398660704,
+      "speed": 0,
+      "index": 0,
+      "s": 4103.822218488676,
+      "lateral": 0,
+      "elapsed": 0,
+      "lap": 1,
+      "nextGate": 1,
+      "off": false,
+      "travelled": 0,
+      "collisions": 0
+    },
+    "input": {
+      "throttle": 0,
+      "brake": 0,
+      "turn": 0
+    }
+  },
+  "roundTrip": {
+    "loaded": true,
+    "running": false,
+    "frame": 251,
+    "frameMs": 17.62302186504105,
+    "mode": "chase",
+    "car": "porsche",
+    "renderer": {
+      "calls": 636,
+      "triangles": 2724025,
+      "textures": 51,
+      "geometries": 567
+    },
+    "state": {
+      "x": 302.344,
+      "y": 21.084,
+      "z": -21.42,
+      "yaw": -2.2367936398660704,
+      "speed": 0,
+      "index": 0,
+      "s": 4103.822218488676,
+      "lateral": 0,
+      "elapsed": 0,
+      "lap": 1,
+      "nextGate": 1,
+      "off": false,
+      "travelled": 0,
+      "collisions": 0
+    },
+    "input": {
+      "throttle": 0,
+      "brake": 0,
+      "turn": 0
+    }
+  },
+  "errors": []
+}
