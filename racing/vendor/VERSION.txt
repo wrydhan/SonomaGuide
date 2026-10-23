@@ -1,0 +1,3 @@
+Three.js 0.186.1
+Vendored from the installed npm package; MIT license in LICENSE.
+Nine upstream indentation sequences were normalized; runtime code is otherwise unchanged.
