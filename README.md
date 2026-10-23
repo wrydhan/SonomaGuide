@@ -2,6 +2,20 @@
 
 A real-scale 3D model of Sonoma Raceway (Sonoma, California): the 12-turn, 4.06 km (2.52 mi) road course with its alternate layouts, pit lane, drag strip, paddock, grandstands and the surrounding hills. It was generated with the [Mint](https://mint.gg) Modeler from OpenStreetMap layout and real elevation data, then the junctions between roads were repaired locally.
 
+## Gameplay
+
+[**Watch the 32-second gameplay video →**](media/gameplay/sonoma-gameplay.mp4) · Porsche and roadster · cockpit and chase views · 720p MP4 · silent
+
+| Porsche 911 GT3 RS Manthey · cockpit | Porsche · chase |
+| --- | --- |
+| ![Porsche cockpit gameplay](media/gameplay/porsche-cockpit.jpg) | ![Porsche driving through the uphill turns](media/gameplay/porsche-chase.jpg) |
+| **Blue roadster · cockpit** | **Blue roadster · chase** |
+| ![Roadster cockpit gameplay](media/gameplay/roadster-cockpit.jpg) | ![Roadster driving through the hillside](media/gameplay/roadster-chase.jpg) |
+
+Actual in-game captures using scripted driving inputs. The video joins two short segments; it is not a complete lap. [Capture details](media/gameplay/README.md).
+
+## Circuit views
+
 ![Overview](renders/overview.jpg)
 
 | Start / finish | The climb to Turn 2 | Turn 3a summit |

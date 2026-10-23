@@ -1,0 +1,92 @@
+{
+  "capture": "Actual Chrome gameplay frames; scripted real keyboard inputs. Porsche starts at the grid; the roadster segment starts at route distance 1100m. Each segment switches from cockpit to chase at its midpoint. Silent capture.",
+  "segments": [
+    {
+      "car": "porsche",
+      "duration": 20,
+      "startDistance": 0,
+      "frames": 599,
+      "firstTimestamp": 1792786552.147761,
+      "lastTimestamp": 1792786572.096878,
+      "diagnostics": {
+        "loaded": true,
+        "running": true,
+        "frame": 1224,
+        "frameMs": 16.66558940734438,
+        "mode": "chase",
+        "car": "porsche",
+        "renderer": {
+          "calls": 372,
+          "triangles": 2179235,
+          "textures": 50,
+          "geometries": 567
+        },
+        "state": {
+          "x": -75.13592278283342,
+          "y": 41.94557922206355,
+          "z": -78.70781735199365,
+          "yaw": -0.4842620073360751,
+          "speed": 23.02078577838127,
+          "index": 220,
+          "s": 439.5437540976613,
+          "lateral": -0.6511958391718511,
+          "elapsed": 19.98333333333284,
+          "lap": 1,
+          "nextGate": 3,
+          "off": false,
+          "travelled": 439.76662420200574,
+          "collisions": 0
+        },
+        "input": {
+          "throttle": 0,
+          "brake": 0,
+          "turn": 0
+        }
+      }
+    },
+    {
+      "car": "roadster",
+      "duration": 12,
+      "startDistance": 1100,
+      "frames": 362,
+      "firstTimestamp": 1792786573.496815,
+      "lastTimestamp": 1792786585.529617,
+      "diagnostics": {
+        "loaded": true,
+        "running": true,
+        "frame": 745,
+        "frameMs": 16.664125663035296,
+        "mode": "chase",
+        "car": "roadster",
+        "renderer": {
+          "calls": 1214,
+          "triangles": 4127340,
+          "textures": 49,
+          "geometries": 444
+        },
+        "state": {
+          "x": -266.337024825173,
+          "y": 42.696651254539496,
+          "z": -335.34127621413984,
+          "yaw": 0.6002343502079437,
+          "speed": 30.42132573633712,
+          "index": 699,
+          "s": 1393.4944598376744,
+          "lateral": 1.5705863808248648,
+          "elapsed": 12.074999999999955,
+          "lap": 1,
+          "nextGate": 1,
+          "off": false,
+          "travelled": 294.6641536025109,
+          "collisions": 0
+        },
+        "input": {
+          "throttle": 0,
+          "brake": 0,
+          "turn": 0
+        }
+      }
+    }
+  ],
+  "errors": []
+}
