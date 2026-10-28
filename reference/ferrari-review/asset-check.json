@@ -1,0 +1,73 @@
+{
+  "daytona": {
+    "size": [
+      2.3380000591278076,
+      1.1409649848937988,
+      4.684000015258789
+    ],
+    "ground": 0.000034689903259277344,
+    "sourceTriangles": 533082,
+    "maxRestDrift": 0,
+    "maxPlaneDrift": 2.185751579730777e-16,
+    "wheels": [
+      {
+        "corner": "FL",
+        "radius": 0.3334653079509735
+      },
+      {
+        "corner": "FR",
+        "radius": 0.3334653079509735
+      },
+      {
+        "corner": "RL",
+        "radius": 0.3699619174003601
+      },
+      {
+        "corner": "RR",
+        "radius": 0.3699619174003601
+      }
+    ],
+    "reached": {
+      "100": 2.85,
+      "200": 7.4
+    },
+    "stopFrom200M": 115.80014807540762,
+    "brakingEstimated": true
+  },
+  "ferrari296": {
+    "size": [
+      2.180000066757202,
+      1.1863045990467072,
+      4.599402666091919
+    ],
+    "ground": -0.0012809336185455322,
+    "sourceTriangles": 299996,
+    "maxRestDrift": 0,
+    "maxPlaneDrift": 1.942890293094024e-16,
+    "wheels": [
+      {
+        "corner": "FL",
+        "radius": 0.3410809338092804
+      },
+      {
+        "corner": "FR",
+        "radius": 0.3405640721321106
+      },
+      {
+        "corner": "RL",
+        "radius": 0.36073005199432373
+      },
+      {
+        "corner": "RR",
+        "radius": 0.3607332408428192
+      }
+    ],
+    "reached": {
+      "100": 2.9,
+      "200": 7.3
+    },
+    "stopFrom200M": 107.00000000002656,
+    "brakingEstimated": false
+  },
+  "status": "passed"
+}

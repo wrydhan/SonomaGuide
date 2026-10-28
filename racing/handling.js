@@ -5,6 +5,8 @@ const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
 const approach=(a,b,amount)=>a+clamp(b-a,-amount,amount);
 // Chassis/tyre parameters are estimates, not manufacturer suspension telemetry.
 export const CHASSIS={
+ daytona:{frontWeight:.44,cgHeight:.43,inertiaFactor:.23,frontStiffness:14,rearStiffness:17,lock:.55,ratio:13,track:1.692,rollGradient:.012,pitchGradient:.008,frequency:2.3,damping:.80},
+ ferrari296:{frontWeight:.405,cgHeight:.44,inertiaFactor:.235,frontStiffness:14.5,rearStiffness:17.5,lock:.55,ratio:13,track:1.665,rollGradient:.012,pitchGradient:.008,frequency:2.3,damping:.80},
  bugatti:{frontWeight:.44,cgHeight:.43,inertiaFactor:.23,frontStiffness:13,rearStiffness:15,lock:.56,ratio:14,track:1.71,rollGradient:.014,pitchGradient:.009,frequency:2.1,damping:.78},
  porsche:{frontWeight:.40,cgHeight:.45,inertiaFactor:.24,frontStiffness:15,rearStiffness:18,lock:.55,ratio:13,track:1.58,rollGradient:.011,pitchGradient:.008,frequency:2.5,damping:.80},
  roadster:{frontWeight:.50,cgHeight:.57,inertiaFactor:.26,frontStiffness:10,rearStiffness:12,lock:.58,ratio:16,track:1.70,rollGradient:.023,pitchGradient:.015,frequency:1.5,damping:.76}

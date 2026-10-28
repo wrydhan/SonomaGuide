@@ -1,6 +1,6 @@
 # First-person time trial
 
-Open `racing/` from a static server rooted at this repository. No build step, paid API call, server secret or CDN is needed for this mode. It loads the existing `../sonoma-raceway-web.glb` and one selected existing car export: the Bugatti Tourbillon, Porsche 911 GT3 RS Manthey or blue roadster.
+Open `racing/` from a static server rooted at this repository. No build step, paid API call, server secret or CDN is needed for this mode. It loads the existing `../sonoma-raceway-web.glb` and one selected existing car export: the Ferrari Daytona SP3, Ferrari 296 GTB, Bugatti Tourbillon, Porsche 911 GT3 RS Manthey or blue roadster.
 
 ```sh
 python3 -m http.server 8882 --bind 127.0.0.1
@@ -16,7 +16,7 @@ python3 -m http.server 8882 --bind 127.0.0.1
 - Gamepad: left stick steers, RT gas, LT brake, Y camera, B recover, Menu pause. Standard browser mapping required.
 - Guide toggles the route arrows. Sound starts/stops a local synthesized engine.
 
-Choose a car in the start/pause menu. A new device defaults to the Bugatti Tourbillon; your last selection is remembered. Open `?car=bugatti`, `?car=porsche` or `?car=roadster` to select directly. Switching cars starts a fresh lap. Best times are saved separately for each car.
+Choose a car in the start/pause menu. A new device defaults to the Bugatti Tourbillon; your last selection is remembered. Open `?car=daytona`, `?car=ferrari296`, `?car=bugatti`, `?car=porsche` or `?car=roadster` to select directly. Switching cars starts a fresh lap. Best times are saved separately for each car.
 
 The lap clock starts with throttle. Complete 24 ordered progress gates and cross the finish forward to record a lap. Cutting to the finish or driving backwards does not record a lap. Best time is saved locally when storage is available. There are no opponents in this time-trial mode.
 
@@ -28,7 +28,7 @@ The shared surface sampler provides car placement, camera orientation, road stat
 
 `race.js` projects the state into Three.js, animates the imported wheel pivots, handles keyboard/touch/lifecycle input, and updates HUD and audio. Repeated static meshes are batched by geometry/material and 250 m spatial cell. Desktop static shadows render once; phones omit shadows and cap pixel ratio. The game smooths rendered road and nearby terrain heights at load time; the source GLBs and inspection viewer stay intact. Continuous surface gradients and filtered car attitude reduce jolts.
 
-All three original car exports are unchanged. `cars.js` holds their orientation, driver-eye, wheel and best-record settings. The Porsche uses a first-person visibility adapter for its obstructing interior-shell panel and windscreen opacity; chase view restores the full model. See [Porsche verification](../reference/porsche-review/README.md). Its fingerprint and source are in `assets/provenance.json`. Local +Z is forward and +X is the driver's left. Three.js 0.186.1 and the required loaders/utilities are vendored under `vendor/`, with its MIT license retained.
+All five original car exports are unchanged. `cars.js` holds their orientation, driver-eye, wheel and best-record settings. The Porsche uses a first-person visibility adapter for its obstructing interior-shell panel and windscreen opacity; chase view restores the full model. See [Porsche verification](../reference/porsche-review/README.md). Its fingerprint and source are in `assets/provenance.json`. Local +Z is forward and +X is the driver's left. Three.js 0.186.1 and the required loaders/utilities are vendored under `vendor/`, with its MIT license retained.
 
 ## Checks
 
@@ -59,3 +59,5 @@ See [current calibration, sources, road measurements and captures](../reference/
 The current target is approachable Gran Turismo / Forza Motorsport-style circuit driving. Keyboard rack rate, analog gamepad/touch controls, handwheel and tyre animation, load-related chassis/camera motion, grip/G-force/pedal indicators, tyre scrub audio and optional supported gamepad rumble are included. Steering never writes yaw directly. Disable speed-sensitive steering for direct full-lock input, or camera motion for a steadier view. Sound is opt-in. These are estimated lateral dynamics, not a certified real-car or AAA simulation. See the [steering tests, gameplay run and limitations](../reference/steering-review/README.md).
 
 The Bugatti's rim rig uses the measured shaft and centre; its instruments stay fixed while the rim and paddles turn. See the [rig repair and full-lock checks](../reference/bugatti-wheel-review/README.md). Run `node tests/bugatti-steering-rig.mjs` after changing that adapter or car export.
+
+The Daytona SP3 and 296 GTB have separate handling profiles, measured wheel/steering adapters, cockpit views and best times. See the [Ferrari integration and calibration checks](../reference/ferrari-review/README.md). Run `node tests/ferrari-assets.mjs` after changing those adapters or exports.

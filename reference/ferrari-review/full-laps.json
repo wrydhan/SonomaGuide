@@ -1,0 +1,32 @@
+{
+  "daytona": {
+    "laps": 1,
+    "time": 249.51666666660407,
+    "peakLateral": 2.406592012517075,
+    "collisions": 0
+  },
+  "ferrari296": {
+    "laps": 1,
+    "time": 249.61666666660398,
+    "peakLateral": 2.3964643232540768,
+    "collisions": 0
+  },
+  "bugatti": {
+    "laps": 1,
+    "time": 248.74166666660477,
+    "peakLateral": 2.4021546222218224,
+    "collisions": 0
+  },
+  "porsche": {
+    "laps": 1,
+    "time": 250.03333333327026,
+    "peakLateral": 2.389358478029392,
+    "collisions": 0
+  },
+  "roadster": {
+    "laps": 1,
+    "time": 253.04166666660086,
+    "peakLateral": 2.4136839191477537,
+    "collisions": 0
+  }
+}

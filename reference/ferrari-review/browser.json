@@ -1,0 +1,236 @@
+{
+  "errors": [],
+  "daytona": {
+    "diagnostics": {
+      "loaded": true,
+      "running": true,
+      "frame": 196,
+      "frameMs": 16.663334299418842,
+      "mode": "chase",
+      "car": "daytona",
+      "renderer": {
+        "calls": 628,
+        "triangles": 2530858,
+        "textures": 57,
+        "geometries": 568
+      },
+      "state": {
+        "x": 286.05859493628463,
+        "y": 21.09214441122596,
+        "z": -33.55132528547141,
+        "yaw": -2.1656337099371155,
+        "speed": 8.402545777937256,
+        "acceleration": -0.7049447354926835,
+        "steer": 0,
+        "yawRate": -0.00000976326897669772,
+        "sideSpeed": -0.00017992619972296894,
+        "lateralAcceleration": 0.002364179051462131,
+        "frontSlip": 0.00002545174802802062,
+        "rearSlip": 0.00002256343117427348,
+        "tyreScrub": 0,
+        "bodyRoll": 0.00034552829173786043,
+        "throttle": 1.329446004584754e-7,
+        "brake": 0.008893250857038558,
+        "index": 10,
+        "s": 20.300125994148676,
+        "lateral": 0.5348529081773087,
+        "elapsed": 2.3499999999999943,
+        "lap": 1,
+        "nextGate": 1,
+        "off": false,
+        "travelled": 20.31586573912931,
+        "collisions": 0
+      },
+      "input": {
+        "throttle": 0,
+        "brake": 0,
+        "turn": 0,
+        "analog": false,
+        "steeringAssist": true
+      }
+    },
+    "wheels": [
+      {
+        "corner": "FL",
+        "radius": 0.3334653079509735,
+        "spin": 61.02769280254974,
+        "steer": 0,
+        "parts": [
+          "wheel_FL_rim",
+          "wheel_FL_tire",
+          "wheel_FL_brake_disc"
+        ]
+      },
+      {
+        "corner": "FR",
+        "radius": 0.3334653079509735,
+        "spin": 61.02769280254974,
+        "steer": 0,
+        "parts": [
+          "wheel_FR_rim",
+          "wheel_FR_tire",
+          "wheel_FR_brake_disc"
+        ]
+      },
+      {
+        "corner": "RL",
+        "radius": 0.3699619174003601,
+        "spin": 55.0073329626436,
+        "steer": 0,
+        "parts": [
+          "wheel_RL_rim",
+          "wheel_RL_tire",
+          "wheel_RL_brake_disc"
+        ]
+      },
+      {
+        "corner": "RR",
+        "radius": 0.3699619174003601,
+        "spin": 55.0073329626436,
+        "steer": 0,
+        "parts": [
+          "wheel_RR_rim",
+          "wheel_RR_tire",
+          "wheel_RR_brake_disc"
+        ]
+      }
+    ],
+    "steering": {
+      "centre": [
+        0.33,
+        0.7,
+        0.62
+      ],
+      "axis": [
+        0,
+        -0.374606593415912,
+        0.9271838545667874
+      ],
+      "movingPartitions": 3
+    }
+  },
+  "ferrari296": {
+    "diagnostics": {
+      "loaded": true,
+      "running": true,
+      "frame": 365,
+      "frameMs": 17.11525650321364,
+      "mode": "chase",
+      "car": "ferrari296",
+      "renderer": {
+        "calls": 636,
+        "triangles": 2289499,
+        "textures": 52,
+        "geometries": 579
+      },
+      "state": {
+        "x": 286.8356763716786,
+        "y": 21.091460987600215,
+        "z": -33.099514708810624,
+        "yaw": -2.1803319636578844,
+        "speed": 7.790031773458757,
+        "acceleration": -0.6279658879781729,
+        "steer": 0,
+        "yawRate": -0.000004717328695537074,
+        "sideSpeed": -0.00010157707344182298,
+        "lateralAcceleration": 0.0007892369858918083,
+        "frontSlip": 0.000014761323809389743,
+        "rearSlip": 0.000013345642490740925,
+        "tyreScrub": 0,
+        "bodyRoll": 0.00015866002793130205,
+        "throttle": 1.755125027865347e-7,
+        "brake": 0.008893250857038558,
+        "index": 9,
+        "s": 19.410494335334008,
+        "lateral": 0.41001988125453975,
+        "elapsed": 2.3333333333333277,
+        "lap": 1,
+        "nextGate": 1,
+        "off": false,
+        "travelled": 19.41971588751862,
+        "collisions": 0
+      },
+      "input": {
+        "throttle": 0,
+        "brake": 0,
+        "turn": 0,
+        "analog": false,
+        "steeringAssist": true
+      }
+    },
+    "wheels": [
+      {
+        "corner": "FL",
+        "radius": 0.3410809338092804,
+        "spin": 57.030518981359485,
+        "steer": 0,
+        "parts": [
+          "wheel_FL_rim",
+          "wheel_FL_tyre",
+          "brake_FL_disc"
+        ]
+      },
+      {
+        "corner": "FR",
+        "radius": 0.3405640721321106,
+        "spin": 57.117072120996404,
+        "steer": 0,
+        "parts": [
+          "wheel_FR_rim",
+          "wheel_FR_tyre",
+          "brake_FR_disc"
+        ]
+      },
+      {
+        "corner": "RL",
+        "radius": 0.36073005199432373,
+        "spin": 53.92404254164017,
+        "steer": 0,
+        "parts": [
+          "wheel_RL_rim",
+          "wheel_RL_tyre",
+          "brake_RL_disc"
+        ]
+      },
+      {
+        "corner": "RR",
+        "radius": 0.3607332408428192,
+        "spin": 53.923565858089944,
+        "steer": 0,
+        "parts": [
+          "wheel_RR_rim",
+          "wheel_RR_tyre",
+          "brake_RR_disc"
+        ]
+      }
+    ],
+    "steering": {
+      "centre": [
+        0.36,
+        0.68,
+        0.38
+      ],
+      "axis": [
+        0,
+        -0.374606593415912,
+        0.9271838545667874
+      ],
+      "movingPartitions": 4
+    }
+  },
+  "bugattiReload": true,
+  "mobile": {
+    "daytona": {
+      "held": 0.5952380952380952,
+      "released": 0,
+      "width": 844,
+      "documentWidth": 844
+    },
+    "ferrari296": {
+      "held": 0.5952380952380952,
+      "released": 0,
+      "width": 844,
+      "documentWidth": 844
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import * as THREE from './vendor/three.module.js';
 // This adapter targets the original Tourbillon export recorded in bugatti-provenance.json.
 // Its instrument cluster is fixed; only the rim and rim-mounted fittings rotate.
-function splitFittings(mesh,select){
+export function splitFittings(mesh,select){
  const geometry=mesh.geometry,position=geometry.getAttribute('position'),index=geometry.index,count=index?index.count:position.count;
  const parent=Array.from({length:position.count},(_,i)=>i),find=i=>{while(parent[i]!==i){parent[i]=parent[parent[i]];i=parent[i];}return i;},join=(a,b)=>{parent[find(a)]=find(b);};
  // Weld only for connectivity. Keep the original normals, UVs and seam vertices in both outputs.

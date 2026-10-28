@@ -1,6 +1,18 @@
 // Launch curves are calibrated to published standing-start targets on flat, dry tarmac.
 // Brake/coast parameters are separate: releasing throttle is never full braking.
 export const PROFILES = {
+  daytona: {
+    id:'daytona',mass:1650,wheelbase:2.651,maxSpeed:340/3.6,dragArea:.75,rolling:.013,engineBrake:.45,
+    acceleration:[[0,0],[2.79,100],[7.34,200],[18.94,300],[45.94,338],[80,340]],
+    brakeBase:11.2,brakeAero:.001,lateralBase:11.5,lateralAero:.0007,throttleResponse:.06,brakeResponse:.06,
+    evidence:'Ferrari factory 0-100/200 and wheelbase; 340 km/h gameplay cap. Running mass, higher-speed curve, braking and tyre/chassis parameters estimated.'
+  },
+  ferrari296: {
+    id:'ferrari296',mass:1600,wheelbase:2.600,maxSpeed:330/3.6,dragArea:.72,rolling:.013,engineBrake:.38,
+    acceleration:[[0,0],[2.84,100],[7.24,200],[18.94,300],[38.94,328],[70,330]],
+    brakeBase:11.868776213235,brakeAero:.0014,lateralBase:11.8,lateralAero:.0008,throttleResponse:.06,brakeResponse:.06,
+    evidence:'Ferrari factory acceleration and 200-0 braking target; 330 km/h gameplay cap. Running mass, higher-speed curve and tyre/chassis parameters estimated.'
+  },
   bugatti: {
     id:'bugatti',mass:1995,wheelbase:2.740,maxSpeed:380/3.6,dragArea:.70,rolling:.012,engineBrake:.24,
     acceleration:[[0,0],[1.94,100],[4.79,200],[9.59,300],[24.34,400],[39.94,435],[69.94,445]],
