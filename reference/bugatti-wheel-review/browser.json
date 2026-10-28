@@ -1,0 +1,19 @@
+{
+  "left": {
+    "steer": 0.4908333333333337,
+    "quaternionAgreement": 0.9999999999999999,
+    "fittings": 2
+  },
+  "centred": {
+    "steer": 0,
+    "quaternionAgreement": 1,
+    "fittings": 2
+  },
+  "right": {
+    "steer": -0.4908333333333337,
+    "quaternionAgreement": 0.9999999999999999,
+    "fittings": 2
+  },
+  "reloadedRotors": 1,
+  "errors": []
+}

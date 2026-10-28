@@ -57,3 +57,5 @@ See [current calibration, sources, road measurements and captures](../reference/
 ## Steering and feedback
 
 The current target is approachable Gran Turismo / Forza Motorsport-style circuit driving. Keyboard rack rate, analog gamepad/touch controls, handwheel and tyre animation, load-related chassis/camera motion, grip/G-force/pedal indicators, tyre scrub audio and optional supported gamepad rumble are included. Steering never writes yaw directly. Disable speed-sensitive steering for direct full-lock input, or camera motion for a steadier view. Sound is opt-in. These are estimated lateral dynamics, not a certified real-car or AAA simulation. See the [steering tests, gameplay run and limitations](../reference/steering-review/README.md).
+
+The Bugatti's rim rig uses the measured shaft and centre; its instruments stay fixed while the rim and paddles turn. See the [rig repair and full-lock checks](../reference/bugatti-wheel-review/README.md). Run `node tests/bugatti-steering-rig.mjs` after changing that adapter or car export.

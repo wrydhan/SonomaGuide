@@ -1,0 +1,19 @@
+{
+  "anglesDegrees": [
+    -450,
+    450
+  ],
+  "sourceTriangles": 21978,
+  "rotatingRimFittingComponents": 2,
+  "axis": [
+    0,
+    -0.374606593415912,
+    0.9271838545667874
+  ],
+  "maxRestDrift": 7.369614944603283e-16,
+  "maxPlaneDrift": 1.2004286453759505e-15,
+  "maxRadiusDrift": 1.887379141862766e-15,
+  "maxFixedDrift": 0,
+  "maxCentreDrift": 5.23691153334427e-16,
+  "status": "passed"
+}
