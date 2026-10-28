@@ -18,6 +18,8 @@ These Porsche/roadster captures predate the Tourbillon and handling update. Actu
 
 [Tourbillon chase view](reference/tourbillon-review/chase.png) · Current gameplay captures.
 
+[Steering and feedback update: gameplay, tests and limits](reference/steering-review/README.md) · [24-second driving clip](media/gameplay/sonoma-handling.mp4).
+
 ## Circuit views
 
 ![Overview](renders/overview.jpg)
@@ -45,9 +47,9 @@ To publish it, turn on GitHub Pages for this repository (Settings → Pages → 
 
 ## Drive it
 
-Open [`racing/`](racing/) for a first-person time trial in the Bugatti Tourbillon, Porsche 911 GT3 RS Manthey or blue open-top car, or click **Drive the circuit** in the viewer. Use W/A/S/D or arrow keys to drive, Space to brake, R to recover (+5 seconds), C for the chase camera, and Escape to pause. Touch controls are available on phones. Choose your car in the menu. Complete the ordered checkpoints to record a lap and a separate best time for each car on this device.
+Open [`racing/`](racing/) for a first-person time trial in the Bugatti Tourbillon, Porsche 911 GT3 RS Manthey or blue open-top car, or click **Drive the circuit** in the viewer. Use W/A/S/D or arrow keys to drive, Space to brake, R to recover (+5 seconds), C for the chase camera, and Escape to pause. Analog touch steering and standard gamepads are supported. Choose your car in the menu. Complete the ordered checkpoints to record a lap and a separate best time for each car on this device.
 
-Driving uses individual acceleration/braking profiles and a smoother continuous road surface, with matching runtime mesh deformation. Tourbillon and Porsche acceleration are calibrated against published figures; Bugatti braking and roadster performance remain estimates. See the [calibration and smoothing review](reference/tourbillon-review/README.md). The model's known junction issues remain. See the [driving guide](racing/README.md) and [verification evidence](reference/racing-review/README.md).
+Driving now uses tyre-force steering with yaw inertia and sideslip, estimated weight transfer, individual acceleration/braking profiles and a smoother continuous road surface, with matching runtime mesh deformation. Tourbillon and Porsche acceleration are calibrated against published figures; Bugatti braking and roadster performance remain estimates. See the [calibration and smoothing review](reference/tourbillon-review/README.md). The model's known junction issues remain. See the [driving guide](racing/README.md) and [verification evidence](reference/racing-review/README.md).
 
 ## The model
 

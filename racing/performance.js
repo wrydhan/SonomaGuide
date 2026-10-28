@@ -36,7 +36,7 @@ export function stepLongitudinal(state,input,dt,profile,{grade=0,lateral=0,off=f
   const drive=(launch+passive)*(requestedBrake>.01?0:state.throttle)*remainingGrip;
   const braking=(profile.brakeBase+profile.brakeAero*v*v)*state.brake*remainingGrip;
   const gravity=G*Math.sin(Math.atan(grade));
-  let acceleration=drive-passive-braking-gravity-(off?1.1+.035*v*v:0);
+  let acceleration=drive-passive-braking-gravity-(Number(off)*(1.1+.035*v*v));
   if(v<.06&&requestedThrottle===0&&Math.abs(grade)<.01){state.speed=0;acceleration=0;}else state.speed=clamp(v+acceleration*dt,0,profile.maxSpeed);
   state.acceleration=acceleration;return (v+state.speed)*.5*dt;
 }

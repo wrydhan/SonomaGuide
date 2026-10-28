@@ -1,4 +1,5 @@
-import fs from 'node:fs';import assert from 'node:assert/strict';import {Circuit,Driving,clamp,angle} from '../racing/simulation.js';
+import {botInput} from './driving-bot.mjs';
+import fs from 'node:fs';import assert from 'node:assert/strict';import {Circuit,Driving} from '../racing/simulation.js';
 const track=new Circuit(JSON.parse(fs.readFileSync(new URL('../racing/route-smooth.json',import.meta.url))));const sim=new Driving(track);const report={length:track.length,samples:track.n};
 assert.ok(track.length>4000&&track.length<4300);assert.ok(track.segments.every(x=>x.len>0&&x.len<2.1));
 for(let i=0;i<1200;i++)sim.tick({throttle:1},1/120);report.acceleration={speed:sim.speed,travelled:sim.travelled};assert.ok(sim.travelled>100);sim.newRun();
@@ -6,12 +7,7 @@ for(let i=0;i<1200;i++)sim.tick({throttle:1},1/120);report.acceleration={speed:s
 const place=s=>{const p=track.at(s);Object.assign(sim,{x:p.x,z:p.z,yaw:p.heading,index:p.i,speed:10});sim.surface=track.sample(p.x,p.z,p.i);sim.lastS=sim.surface.s;};place(track.length-1);for(let i=0;i<60;i++)sim.tick({throttle:0},1/120);assert.equal(sim.laps,0);sim.newRun();
 let peakLateral=0,peakSpeed=0,steps=0;
 for(;steps<120*600&&sim.laps<1;steps++){
- const s=sim.surface,look=track.at(s.s+8+sim.speed*.45),target=Math.atan2(look.x-sim.x,look.z-sim.z),err=angle(target-sim.yaw),desiredRate=err*2.4;
- const maxSteer=.49/(1+sim.speed*.038);const steer=Math.atan(desiredRate*sim.profile.wheelbase/Math.max(sim.speed,3));
- let safe=53;
- for(let d=10;d<100;d+=10){const a=track.at(s.s+d),b=track.at(s.s+d+10),curve=Math.abs(angle(b.heading-a.heading))/10;const corner=Math.sqrt(6/Math.max(curve,.001));safe=Math.min(safe,Math.sqrt(corner*corner+2*9*Math.max(0,d-12)));}
- const throttle=sim.speed<safe-1?1:0,brake=sim.speed>safe+1?1:0;
- sim.tick({throttle,brake,turn:clamp(steer/maxSteer,-1,1)},1/120);peakLateral=Math.max(peakLateral,Math.abs(sim.surface.lateral));peakSpeed=Math.max(peakSpeed,sim.speed);
+ sim.tick(botInput(sim),1/120);peakLateral=Math.max(peakLateral,Math.abs(sim.surface.lateral));peakSpeed=Math.max(peakSpeed,sim.speed);
 }
 report.fullLap={laps:sim.laps,seconds:sim.lastLap,gate:sim.nextGate,steps,peakLateral,peakSpeed,collisions:sim.collisions,travelled:sim.travelled};assert.equal(sim.laps,1,'Bot must finish a valid lap');assert.ok(sim.lastLap>60);assert.ok(peakLateral<6.5,'Bot should stay on the circuit');
 assert.ok(sim.best===sim.lastLap);

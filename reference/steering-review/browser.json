@@ -1,0 +1,101 @@
+{
+  "turning": {
+    "loaded": true,
+    "running": true,
+    "frame": 182,
+    "frameMs": 16.686907347112683,
+    "mode": "driver",
+    "car": "bugatti",
+    "renderer": {
+      "calls": 602,
+      "triangles": 2630829,
+      "textures": 65,
+      "geometries": 587
+    },
+    "state": {
+      "x": 284.6674721018984,
+      "y": 21.093800472625823,
+      "z": -35.24363907387159,
+      "yaw": -2.2032387459282243,
+      "speed": 23.13068185307928,
+      "acceleration": -0.14707485201039155,
+      "steer": 0.10313042511685491,
+      "yawRate": 0.3766198121382914,
+      "sideSpeed": -0.09955631379192474,
+      "lateralAcceleration": 5.432124149094721,
+      "frontSlip": 0.08259684635166427,
+      "rearSlip": 0.021970105782099653,
+      "tyreScrub": 0.2349802896979017,
+      "bodyRoll": 0.037360195083394526,
+      "throttle": 0.027021805951115446,
+      "brake": 0,
+      "index": 11,
+      "s": 22.439862584389836,
+      "lateral": 0.06531862912842232,
+      "elapsed": 1.799999999999996,
+      "lap": 1,
+      "nextGate": 1,
+      "off": false,
+      "travelled": 22.440396244146864,
+      "collisions": 0
+    },
+    "input": {
+      "throttle": 0,
+      "brake": 0,
+      "turn": 0,
+      "analog": false,
+      "steeringAssist": true
+    }
+  },
+  "released": {
+    "loaded": true,
+    "running": true,
+    "frame": 224,
+    "frameMs": 16.673183058819525,
+    "mode": "driver",
+    "car": "bugatti",
+    "renderer": {
+      "calls": 590,
+      "triangles": 2550335,
+      "textures": 65,
+      "geometries": 587
+    },
+    "state": {
+      "x": 271.27024348211773,
+      "y": 21.117600592178515,
+      "z": -44.08044903119204,
+      "yaw": -2.1257950792475344,
+      "speed": 22.75455268697123,
+      "acceleration": -0.4907773764930966,
+      "steer": 0,
+      "yawRate": -0.002780913841367757,
+      "sideSpeed": -0.05203877280119996,
+      "lateralAcceleration": 0.3346588353261593,
+      "frontSlip": 0.0026230122297363117,
+      "rearSlip": 0.0022837033635485122,
+      "tyreScrub": 0,
+      "bodyRoll": 0.010917483762362009,
+      "throttle": 2.3171034047504158e-7,
+      "brake": 0,
+      "index": 19,
+      "s": 38.42840500301959,
+      "lateral": 1.4606448674903647,
+      "elapsed": 2.499999999999994,
+      "lap": 1,
+      "nextGate": 1,
+      "off": false,
+      "travelled": 38.49392215090948,
+      "collisions": 0
+    },
+    "input": {
+      "throttle": 0,
+      "brake": 0,
+      "turn": 0,
+      "analog": false,
+      "steeringAssist": true
+    }
+  },
+  "fov": 58.74871281238367,
+  "fovAfter": 58.00630634003619,
+  "errors": []
+}

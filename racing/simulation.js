@@ -1,3 +1,4 @@
+import {CHASSIS,resetHandling,updateSteering,stepHandling} from './handling.js';
 import {PROFILES,stepLongitudinal} from './performance.js';
 // Spatial contract: metres, Y-up, heading 0 points +Z; positive yaw turns left.
 export const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
@@ -25,25 +26,26 @@ export class Circuit {
   }
 }
 export class Driving {
-  constructor(circuit,bestKey='sonoma.best.v2.porsche',profile=PROFILES.porsche){this.profile=profile;this.track=circuit;this.bestKey=bestKey;this.best=null;try{const x=Number(localStorage.getItem(this.bestKey));if(x>0&&Number.isFinite(x))this.best=x;}catch{}this.newRun();}
-  newRun(){const p=this.track.at(0);Object.assign(this,{x:p.x,z:p.z,y:p.y,yaw:p.heading,speed:0,steer:0,throttle:0,brake:0,acceleration:0,index:p.i,elapsed:0,lap:1,nextGate:1,laps:0,lastLap:null,penalty:0,started:false,off:false,wrongWay:false,collisions:0,notice:'',noticeTime:0,travelled:0});this.safe={...p};this.lastS=0;this.surface=this.track.sample(this.x,this.z,this.index);}
-  recover(){this.x=this.safe.x;this.z=this.safe.z;this.yaw=this.safe.heading;this.index=this.safe.i;this.speed=0;this.steer=0;this.throttle=0;this.brake=0;if(this.started){this.penalty+=5;this.elapsed+=5;}this.notice='BACK ON TRACK · +5 SEC';this.noticeTime=3;this.surface=this.track.sample(this.x,this.z,this.index);this.lastS=this.surface.s;this.y=this.surface.y;this.off=false;this.wrongWay=false;}
-  tick(input,dt){const t=this.track,old=this.surface;
-    const throttle=input.throttle||0,brake=input.brake||0,turn=input.turn||0;
+  constructor(circuit,bestKey='sonoma.best.v3.porsche',profile=PROFILES.porsche){this.profile=profile;this.track=circuit;this.bestKey=bestKey;this.best=null;try{const x=Number(localStorage.getItem(this.bestKey));if(x>0&&Number.isFinite(x))this.best=x;}catch{}this.newRun();}
+  newRun(){const p=this.track.at(0);Object.assign(this,{x:p.x,z:p.z,y:p.y,yaw:p.heading,speed:0,steer:0,throttle:0,brake:0,acceleration:0,index:p.i,elapsed:0,lap:1,nextGate:1,laps:0,lastLap:null,penalty:0,started:false,off:false,wrongWay:false,collisions:0,notice:'',noticeTime:0,travelled:0});resetHandling(this);this.previous=null;this.safe={...p};this.lastS=0;this.surface=this.track.sample(this.x,this.z,this.index);}
+  recover(){this.x=this.safe.x;this.z=this.safe.z;this.yaw=this.safe.heading;this.index=this.safe.i;this.speed=0;resetHandling(this);this.throttle=0;this.brake=0;if(this.started){this.penalty+=5;this.elapsed+=5;}this.notice='BACK ON TRACK · +5 SEC';this.noticeTime=3;this.surface=this.track.sample(this.x,this.z,this.index);this.lastS=this.surface.s;this.y=this.surface.y;this.off=false;this.wrongWay=false;this.previous=null;}
+  tick(input,dt){this.previous={x:this.x,y:this.y,z:this.z,yaw:this.yaw};const t=this.track,old=this.surface;
+    const throttle=input.throttle||0;
     if(throttle>.05)this.started=true;
     if(this.started)this.elapsed+=dt;
     this.noticeTime=Math.max(0,this.noticeTime-dt);
-    const maxSteer=.49/(1+Math.abs(this.speed)*.038),desired=turn*maxSteer;this.steer+=(desired-this.steer)*Math.min(1,dt*7);
-    const p=this.profile,lateralLimit=p.lateralBase+p.lateralAero*this.speed*this.speed;
-    const requestedRate=this.speed/p.wheelbase*Math.tan(this.steer);
-    const rate=clamp(requestedRate,-lateralLimit/Math.max(this.speed,4),lateralLimit/Math.max(this.speed,4));
+    const p=this.profile;updateSteering(this,input,dt,p);
     const headingError=this.yaw-old.heading,grade=old.slope*Math.cos(headingError)+old.bank*Math.sin(headingError);
-    const step=stepLongitudinal(this,input,dt,p,{grade,lateral:this.speed*rate,off:old.off});
-    this.yaw+=rate*dt;this.x+=Math.sin(this.yaw)*step;this.z+=Math.cos(this.yaw)*step;this.travelled+=step;
+    const vx=Math.sin(this.yaw)*this.speed+Math.cos(this.yaw)*this.sideSpeed,vz=Math.cos(this.yaw)*this.speed-Math.sin(this.yaw)*this.sideSpeed;
+    stepLongitudinal(this,input,dt,p,{grade,lateral:this.lateralAcceleration,off:clamp((Math.abs(old.lateral)+CHASSIS[p.id].track/2-t.halfWidth)/CHASSIS[p.id].track,0,1)});
+    const motion=stepHandling(this,dt,p,{bank:old.bank*Math.cos(headingError)-old.slope*Math.sin(headingError),lateral:old.lateral,headingError,halfWidth:t.halfWidth});
+    const dx=(vx*dt+motion.dx)*.5,dz=(vz*dt+motion.dz)*.5;this.x+=dx;this.z+=dz;this.travelled+=Math.hypot(dx,dz);
     let s=t.sample(this.x,this.z,this.index);
     // Corridor barrier is resolved each fixed step (under 0.88 m at the standard Bugatti limiter).
     const boundary=s.lateral>0?s.limitLeft:s.limitRight;
-    if(Math.abs(s.lateral)>boundary){const sign=Math.sign(s.lateral);this.x=s.x+Math.cos(s.heading)*(boundary-.05)*sign;this.z=s.z-Math.sin(s.heading)*(boundary-.05)*sign;this.speed*=.70;this.yaw+=angle(s.heading-this.yaw)*.18;this.collisions++;s=t.sample(this.x,this.z,s.i);this.notice='RUNOFF · LIFT AND REJOIN';this.noticeTime=1.4;}
+    if(Math.abs(s.lateral)>boundary){const sign=Math.sign(s.lateral);this.x=s.x+Math.cos(s.heading)*(boundary-.05)*sign;this.z=s.z-Math.sin(s.heading)*(boundary-.05)*sign;const vx=Math.sin(this.yaw)*this.speed+Math.cos(this.yaw)*this.sideSpeed,vz=Math.cos(this.yaw)*this.speed-Math.sin(this.yaw)*this.sideSpeed;
+      const nx=Math.cos(s.heading)*sign,nz=-Math.sin(s.heading)*sign,normalSpeed=Math.max(0,vx*nx+vz*nz),outX=(vx-nx*normalSpeed)*.9,outZ=(vz-nz*normalSpeed)*.9;
+      this.speed=Math.max(0,outX*Math.sin(this.yaw)+outZ*Math.cos(this.yaw));this.sideSpeed=outX*Math.cos(this.yaw)-outZ*Math.sin(this.yaw);this.yawRate*=.45;this.impact=Math.min(1,normalSpeed/12);this.collisions++;s=t.sample(this.x,this.z,s.i);this.notice='RUNOFF · LIFT AND REJOIN';this.noticeTime=1.4;}
     this.surface=s;this.index=s.i;this.y=s.y;this.off=s.off;this.wrongWay=Math.cos(this.yaw-s.heading)<-.3&&this.speed>2;
     if(!this.off&&!this.wrongWay&&this.speed>1)this.safe={x:s.x,z:s.z,y:s.cy,heading:s.heading,i:s.i,s:s.s};
     let ds=s.s-this.lastS;if(ds<-t.length/2)ds+=t.length;if(ds>t.length/2)ds-=t.length;

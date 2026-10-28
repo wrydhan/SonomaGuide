@@ -1,0 +1,64 @@
+{
+  "errors": [],
+  "gamepad": {
+    "gas": 11.545480393178243,
+    "analogThrottle": 0.45,
+    "steer": 0.09578130754376653,
+    "turnIntent": 0.3832653157327235,
+    "brake": 0.6,
+    "camera": "chase",
+    "disconnect": {
+      "throttle": 0,
+      "brake": 0,
+      "turn": 0,
+      "analog": false,
+      "steeringAssist": true
+    }
+  },
+  "portraitMenu": {
+    "width": 390,
+    "docWidth": 390,
+    "scroll": 844,
+    "viewport": 844
+  },
+  "touch": {
+    "held": {
+      "throttle": 0,
+      "brake": 0,
+      "turn": 0.5952380952380952,
+      "analog": true,
+      "steeringAssist": true
+    },
+    "released": {
+      "throttle": 0,
+      "brake": 0,
+      "turn": 0,
+      "analog": false,
+      "steeringAssist": true
+    },
+    "landscape": {
+      "width": 844,
+      "docWidth": 844,
+      "pad": {
+        "x": 16,
+        "y": 309,
+        "width": 140,
+        "height": 65,
+        "top": 309,
+        "right": 156,
+        "bottom": 374,
+        "left": 16
+      },
+      "feedback": {
+        "x": 18,
+        "y": 76,
+        "width": 150,
+        "height": 66,
+        "top": 76,
+        "right": 168,
+        "bottom": 142,
+        "left": 18
+      }
+    }
+  }
+}
