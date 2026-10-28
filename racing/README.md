@@ -1,6 +1,6 @@
 # First-person time trial
 
-Open `racing/` from a static server rooted at this repository. No build step, paid API call, server secret or CDN is needed for this mode. It loads the existing `../sonoma-raceway-web.glb` and one selected existing car export: the Porsche 911 GT3 RS Manthey or blue roadster.
+Open `racing/` from a static server rooted at this repository. No build step, paid API call, server secret or CDN is needed for this mode. It loads the existing `../sonoma-raceway-web.glb` and one selected existing car export: the Bugatti Tourbillon, Porsche 911 GT3 RS Manthey or blue roadster.
 
 ```sh
 python3 -m http.server 8882 --bind 127.0.0.1
@@ -15,23 +15,26 @@ python3 -m http.server 8882 --bind 127.0.0.1
 - Touch buttons provide steering and pedals on phones. Landscape gives a wider driving view.
 - Guide toggles the route arrows. Sound starts/stops a local synthesized engine.
 
-Choose a car in the start/pause menu. A new device defaults to the Porsche; your last selection is remembered. Open `?car=porsche` or `?car=roadster` to select directly. Switching cars starts a fresh lap. Best times are saved separately for each car.
+Choose a car in the start/pause menu. A new device defaults to the Bugatti Tourbillon; your last selection is remembered. Open `?car=bugatti`, `?car=porsche` or `?car=roadster` to select directly. Switching cars starts a fresh lap. Best times are saved separately for each car.
 
 The lap clock starts with throttle. Complete 24 ordered progress gates and cross the finish forward to record a lap. Cutting to the finish or driving backwards does not record a lap. Best time is saved locally when storage is available. There are no opponents in this time-trial mode.
 
 ## Implementation
 
-`simulation.js` owns a fixed 120 Hz arcade bicycle model. It allows independent steering, acceleration and braking rather than moving the car on rails. Speed is limited by cornering grip; grass/runoff slows the car. `route.json` contains 2,068 cross sections taken directly from `road_main`, with road elevation and crossfall, sampled runoff heights, and barrier clearances. Mesh path length is about 4.10 km; this is the generated circuit's measured geometry, not a survey-grade track model.
+`simulation.js` owns a fixed 120 Hz surface-following bicycle model with separate car performance profiles. It allows independent steering, acceleration and braking rather than moving the car on rails. Speed is limited by cornering grip; grass/runoff slows the car. `route-smooth.json` is the smoothed playable surface derived from `route.json`, which contains 2,068 cross sections taken directly from `road_main`, with road elevation and crossfall, sampled runoff heights, and barrier clearances. Mesh path length is about 4.10 km; this is the generated circuit's measured geometry, not a survey-grade track model.
 
 The shared surface sampler provides car placement, camera orientation, road status and lap progress. Swept sub-metre simulation steps and a bounded runoff corridor prevent tunneling out of the playable route. Barrier distances were sampled offline against the model's walls and guardrails, with a 1.2 m vehicle clearance. The corridor is an arcade collision approximation: no rigid-body impacts, suspension, jumping, reversing, driving on alternate layouts or unrestricted paddock exploration. Existing track-model defects remain.
 
-`race.js` projects the state into Three.js, animates the imported wheel pivots, handles keyboard/touch/lifecycle input, and updates HUD and audio. Repeated static meshes are batched by geometry/material and 250 m spatial cell. Desktop static shadows render once; phones omit shadows and cap pixel ratio. No source track geometry is modified.
+`race.js` projects the state into Three.js, animates the imported wheel pivots, handles keyboard/touch/lifecycle input, and updates HUD and audio. Repeated static meshes are batched by geometry/material and 250 m spatial cell. Desktop static shadows render once; phones omit shadows and cap pixel ratio. The game smooths rendered road and nearby terrain heights at load time; the source GLBs and inspection viewer stay intact. Continuous surface gradients and filtered car attitude reduce jolts.
 
-Both original car exports are unchanged. `cars.js` holds their orientation, driver-eye, wheel and best-record settings. The Porsche uses a first-person visibility adapter for its obstructing interior-shell panel and windscreen opacity; chase view restores the full model. See [Porsche verification](../reference/porsche-review/README.md). Its fingerprint and source are in `assets/provenance.json`. Local +Z is forward and +X is the driver's left. Three.js 0.186.1 and the required loaders/utilities are vendored under `vendor/`, with its MIT license retained.
+All three original car exports are unchanged. `cars.js` holds their orientation, driver-eye, wheel and best-record settings. The Porsche uses a first-person visibility adapter for its obstructing interior-shell panel and windscreen opacity; chase view restores the full model. See [Porsche verification](../reference/porsche-review/README.md). Its fingerprint and source are in `assets/provenance.json`. Local +Z is forward and +X is the driver's left. Three.js 0.186.1 and the required loaders/utilities are vendored under `vendor/`, with its MIT license retained.
 
 ## Checks
 
 ```sh
+node tests/all-cars-lap.mjs
+node tests/test-performance.mjs
+node tests/test-surface.mjs
 node tests/racing-simulation.mjs
 node --check racing/race.js
 node --check racing/simulation.js
@@ -42,3 +45,9 @@ The simulation test drives an entire valid lap, checks an out-of-order finish is
 Use `?debug` to expose `window.__THREE_GAME_DIAGNOSTICS__()` and deterministic test hooks. No debug UI appears in the normal route. There is no build toolchain to typecheck; static JavaScript syntax and runtime checks are the release checks.
 
 To rebuild the route after editing the main road, install numpy, scipy, trimesh and rtree in a Python environment and run `python tools/build_driving_route.py`. The extractor is specific to the road mesh's existing atlas and topology. Do not use it blindly on a remeshed track; verify continuity and rerun the full-lap check first.
+
+## Performance and surface update
+
+The Tourbillon and Porsche acceleration envelopes match manufacturer figures on flat dry asphalt. Porsche braking is fitted to an instrumented GT3 RS test; Tourbillon braking and the concept roadster performance are estimates. Coasting, pedal response, aerodynamic resistance, grade and shared cornering/braking grip are modeled. This remains a simplified game without suspension or full tyre dynamics. Best records now use a separate v2 key for each car because handling changed.
+
+See [current calibration, sources, road measurements and captures](../reference/tourbillon-review/README.md). Rebuild the smooth profile with `python tools/build_smoothed_route.py` after rebuilding the raw route (numpy/scipy required).

@@ -1,5 +1,5 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';import {Circuit,Driving,clamp,angle} from '../racing/simulation.js';
-const track=new Circuit(JSON.parse(fs.readFileSync(new URL('../racing/route.json',import.meta.url))));const sim=new Driving(track);const report={length:track.length,samples:track.n};
+const track=new Circuit(JSON.parse(fs.readFileSync(new URL('../racing/route-smooth.json',import.meta.url))));const sim=new Driving(track);const report={length:track.length,samples:track.n};
 assert.ok(track.length>4000&&track.length<4300);assert.ok(track.segments.every(x=>x.len>0&&x.len<2.1));
 for(let i=0;i<1200;i++)sim.tick({throttle:1},1/120);report.acceleration={speed:sim.speed,travelled:sim.travelled};assert.ok(sim.travelled>100);sim.newRun();
 // No credit for starting near the finish or crossing it backwards.
@@ -7,7 +7,7 @@ const place=s=>{const p=track.at(s);Object.assign(sim,{x:p.x,z:p.z,yaw:p.heading
 let peakLateral=0,peakSpeed=0,steps=0;
 for(;steps<120*600&&sim.laps<1;steps++){
  const s=sim.surface,look=track.at(s.s+8+sim.speed*.45),target=Math.atan2(look.x-sim.x,look.z-sim.z),err=angle(target-sim.yaw),desiredRate=err*2.4;
- const maxSteer=.49/(1+sim.speed*.038);const steer=Math.atan(desiredRate*3.1/Math.max(sim.speed,3));
+ const maxSteer=.49/(1+sim.speed*.038);const steer=Math.atan(desiredRate*sim.profile.wheelbase/Math.max(sim.speed,3));
  let safe=53;
  for(let d=10;d<100;d+=10){const a=track.at(s.s+d),b=track.at(s.s+d+10),curve=Math.abs(angle(b.heading-a.heading))/10;const corner=Math.sqrt(6/Math.max(curve,.001));safe=Math.min(safe,Math.sqrt(corner*corner+2*9*Math.max(0,d-12)));}
  const throttle=sim.speed<safe-1?1:0,brake=sim.speed>safe+1?1:0;

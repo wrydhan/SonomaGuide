@@ -12,7 +12,11 @@ A real-scale 3D model of Sonoma Raceway (Sonoma, California): the 12-turn, 4.06 
 | **Blue roadster · cockpit** | **Blue roadster · chase** |
 | ![Roadster cockpit gameplay](media/gameplay/roadster-cockpit.jpg) | ![Roadster driving through the hillside](media/gameplay/roadster-chase.jpg) |
 
-Actual in-game captures using scripted driving inputs. The video joins two short segments; it is not a complete lap. [Capture details](media/gameplay/README.md).
+These Porsche/roadster captures predate the Tourbillon and handling update. Actual in-game captures using scripted driving inputs. The video joins two short segments; it is not a complete lap. [Capture details](media/gameplay/README.md).
+
+![Bugatti Tourbillon cockpit](reference/tourbillon-review/cockpit.png)
+
+[Tourbillon chase view](reference/tourbillon-review/chase.png) · Current gameplay captures.
 
 ## Circuit views
 
@@ -41,9 +45,9 @@ To publish it, turn on GitHub Pages for this repository (Settings → Pages → 
 
 ## Drive it
 
-Open [`racing/`](racing/) for a first-person time trial in the Porsche 911 GT3 RS Manthey or blue open-top car, or click **Drive the circuit** in the viewer. Use W/A/S/D or arrow keys to drive, Space to brake, R to recover (+5 seconds), C for the chase camera, and Escape to pause. Touch controls are available on phones. Choose your car in the menu. Complete the ordered checkpoints to record a lap and a separate best time for each car on this device.
+Open [`racing/`](racing/) for a first-person time trial in the Bugatti Tourbillon, Porsche 911 GT3 RS Manthey or blue open-top car, or click **Drive the circuit** in the viewer. Use W/A/S/D or arrow keys to drive, Space to brake, R to recover (+5 seconds), C for the chase camera, and Escape to pause. Touch controls are available on phones. Choose your car in the menu. Complete the ordered checkpoints to record a lap and a separate best time for each car on this device.
 
-This is an arcade driving mode with sampled elevation, crossfall, runoff and roadside limits. It uses the same repaired track; the model's known visual issues remain. See the [driving guide](racing/README.md) and [verification evidence](reference/racing-review/README.md).
+Driving uses individual acceleration/braking profiles and a smoother continuous road surface, with matching runtime mesh deformation. Tourbillon and Porsche acceleration are calibrated against published figures; Bugatti braking and roadster performance remain estimates. See the [calibration and smoothing review](reference/tourbillon-review/README.md). The model's known junction issues remain. See the [driving guide](racing/README.md) and [verification evidence](reference/racing-review/README.md).
 
 ## The model
 

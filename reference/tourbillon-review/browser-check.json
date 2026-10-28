@@ -1,0 +1,86 @@
+{
+  "loadMilliseconds": 11030,
+  "driven": {
+    "loaded": true,
+    "running": true,
+    "frame": 213,
+    "frameMs": 16.66520527628183,
+    "mode": "driver",
+    "car": "bugatti",
+    "renderer": {
+      "calls": 584,
+      "triangles": 2632539,
+      "textures": 65,
+      "geometries": 587
+    },
+    "state": {
+      "x": 273.04595391585417,
+      "y": 21.11498137079085,
+      "z": -44.44122375079758,
+      "yaw": -2.2367936398660704,
+      "speed": 31.436134572555343,
+      "acceleration": 8.450466667327545,
+      "throttle": 0.757465128396966,
+      "brake": 0,
+      "index": 18,
+      "s": 37.260409855731595,
+      "lateral": 0.07476580471542678,
+      "elapsed": 2.316666666666661,
+      "lap": 1,
+      "nextGate": 1,
+      "off": false,
+      "travelled": 37.26059912740283,
+      "collisions": 0
+    },
+    "input": {
+      "throttle": 0,
+      "brake": 0,
+      "turn": 0
+    }
+  },
+  "braked": {
+    "loaded": true,
+    "running": true,
+    "frame": 303,
+    "frameMs": 16.668044988969918,
+    "mode": "driver",
+    "car": "bugatti",
+    "renderer": {
+      "calls": 560,
+      "triangles": 2513074,
+      "textures": 65,
+      "geometries": 587
+    },
+    "state": {
+      "x": 245.39206264374036,
+      "y": 21.27104122129706,
+      "z": -66.17053691820578,
+      "yaw": -2.2367936398660704,
+      "speed": 15.083234866056578,
+      "acceleration": -10.96783154767593,
+      "throttle": 1.0519633182844715e-11,
+      "brake": 0.9999999999861121,
+      "index": 36,
+      "s": 72.43025171004243,
+      "lateral": 0.1771254479489332,
+      "elapsed": 3.8166666666666558,
+      "lap": 1,
+      "nextGate": 1,
+      "off": false,
+      "travelled": 72.43019897183089,
+      "collisions": 0
+    },
+    "input": {
+      "throttle": 0,
+      "brake": 0,
+      "turn": 0
+    }
+  },
+  "smoothing": {
+    "meshes": 205,
+    "vertices": 457317,
+    "maxDisplacement": 1.162783694563013,
+    "repositioned": 1
+  },
+  "errors": []
+}

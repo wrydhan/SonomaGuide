@@ -1,0 +1,11 @@
+{
+  "asset": "bugatti-tourbillon.glb",
+  "name": "Bugatti Tourbillon",
+  "shareUrl": "https://mint.gg/share/ks77gk02c20cmjb9gdyc2vvc398h49jj",
+  "modelId": "ks77gk02c20cmjb9gdyc2vvc398h49jj",
+  "mintUrl": "https://mint.gg/assets?asset=ks77gk02c20cmjb9gdyc2vvc398h49jj",
+  "sha256": "a983d4816a1192e776f6e4446cb5e2e295af2d9bf2f2b470f27691584d18bdbc",
+  "bytes": 41698068,
+  "normalization": "Original full-detail GLB retained; Y up, +Z forward, wheel pivots unchanged.",
+  "generation": "Retrieved existing shared Modeler asset. No new generation or paid conversion."
+}

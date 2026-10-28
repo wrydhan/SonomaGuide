@@ -1,0 +1,20 @@
+{
+  "bugatti": {
+    "laps": 1,
+    "time": 178.35833333333545,
+    "peakLateral": 1.76582702137843,
+    "collisions": 0
+  },
+  "porsche": {
+    "laps": 1,
+    "time": 185.40833333332904,
+    "peakLateral": 1.782696465104348,
+    "collisions": 0
+  },
+  "roadster": {
+    "laps": 1,
+    "time": 191.9999999999897,
+    "peakLateral": 1.7977283715441361,
+    "collisions": 0
+  }
+}

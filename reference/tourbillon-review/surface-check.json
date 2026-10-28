@@ -1,0 +1,11 @@
+{
+  "samples": 2068,
+  "length": 4103.822218488676,
+  "maxElevationChange": 1.1434599999999975,
+  "maxSlopeJump": 1.764055852504498e-7,
+  "maxBankJump": 8.662177349407288e-8,
+  "maxHeightJump": 0.0000037349923331930768,
+  "gradeChangeRmsBefore": 0.003399248870289942,
+  "gradeChangeRmsAfter": 0.0025248206351776528,
+  "status": "passed"
+}

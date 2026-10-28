@@ -1,0 +1,21 @@
+{
+  "porsche": {
+    "profile": "porsche",
+    "key": "sonoma.best.v2.porsche"
+  },
+  "roadster": {
+    "profile": "roadster",
+    "key": "sonoma.best.v2.roadster"
+  },
+  "bugatti": {
+    "profile": "bugatti",
+    "key": "sonoma.best.v2.bugatti"
+  },
+  "paused": true,
+  "recovered": true,
+  "layout": {
+    "width": 390,
+    "documentWidth": 390
+  },
+  "errors": []
+}
